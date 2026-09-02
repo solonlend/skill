@@ -1,0 +1,59 @@
+{
+  "_comment": "Solon on Robinhood Chain. Machine-readable, pinned. VERIFY every address on-chain (see VERIFY.md) before sending value — do not trust this file blindly.",
+  "verifiedAt": "2026-09-03",
+  "chain": {
+    "name": "Robinhood Chain",
+    "chainId": 4663,
+    "chainIdHex": "0x1237",
+    "gasToken": "ETH",
+    "rpc": "https://rpc.mainnet.chain.robinhood.com/rpc",
+    "explorer": "https://robinhoodchain.blockscout.com"
+  },
+  "morpho": {
+    "core": "0x9D53d5E3bd5E8d4Cbfa6DB1ca238AEA02E651010",
+    "coreOwner": "0x060595638692de6ccd47ca04094f1772d3d39728",
+    "adaptiveCurveIrm": "0x2BD3d5965B26B51814AC95127B2b80dD6CcC0fa1",
+    "chainlinkOracleV2Factory": "0xB7c16F6F8cF531447Bf27Ca7220f981E79C9cdF2",
+    "vaultV2Factory": "0x0FBad98595b0186dA120E41f77C102beb49f803c",
+    "publicAllocator": "0xCe5c1aFa115fF8b1D6913509bfc79D9AE08CC857",
+    "morphoMarketV1AdapterV2Factory": "0x79370Ed003CE325C088E530d5e8655c99c2993e1",
+    "morphoVaultV1AdapterFactory": "0x7a91222F3f7B927bB8fb624593Ca86e111C2F85e",
+    "bundler3": "0x6478e9393d4C5bB4d53ee881d1DE78786A0344a6",
+    "generalAdapter1": "0xc5E188541D107e8B79e43478bDE365F1406665D6",
+    "preLiquidationFactory": "0x0B0cFa151c06d2342799267754b0a2c320C43D5B",
+    "registryList": "0xe785a2eFD384BA7B95BaEd3851BC76aeD67C676f",
+    "permit2": "0x000000000022D473030F116dDEE9F6B43aC78BA3",
+    "_vaultNote": "Robinhood Chain runs Morpho Vault V2 (vaultV2Factory), NOT classic MetaMorpho v1.1. No v1.1 factory exists on 4663."
+  },
+  "tokens": {
+    "USDG": { "address": "0x5fc5360d0400a0fd4f2af552add042d716f1d168", "decimals": 6, "role": "loan token (the only borrowable asset)" },
+    "AAPL": { "address": "0xaf3d76f1834a1d425780943c99ea8a608f8a93f9", "decimals": 18, "chainlinkFeed": "0x6B22A786bAa607d76728168703a39Ea9C99f2cD0", "poolDepth": "~$1.15M" },
+    "NVDA": { "address": "0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec", "decimals": 18, "chainlinkFeed": "0x379EC4f7C378F34a1B47E4F3cbeBCbAC3E8E9F15", "poolDepth": "~$4.30M" },
+    "TSLA": { "address": "0x322F0929c4625eD5bAd873c95208D54E1c003b2d", "decimals": 18, "chainlinkFeed": "0x4A1166a659A55625345e9515b32adECea5547C38" },
+    "MSFT": { "address": "0xe93237c50d904957cf27e7b1133b510c669c2e74", "decimals": 18, "chainlinkFeed": "0x45C3C877C15E6BA2EBB19eA114Ea508d14C1Af2E" },
+    "META": { "address": "0xc0d6457c16cc70d6790dd43521c899c87ce02f35", "decimals": 18, "chainlinkFeed": "0x7C38C00C30BEe9378381E7B6135d7283356D71b1" },
+    "USDG_feed": "0x61B7e5650328764B076A108EFF5fa7282a1B9aD2"
+  },
+  "solon": {
+    "_status": "M1 — set at deploy",
+    "usdgVault": "TBD",
+    "oracleAdapters": { "AAPL": "TBD", "NVDA": "TBD" },
+    "feeRecipient": "TBD",
+    "liquidationBot": "TBD",
+    "markets": { "AAPL_USDG_id": "TBD", "NVDA_USDG_id": "TBD" },
+    "lltv": "385000000000000000",
+    "lltvPercent": 38.5
+  },
+  "liveExample": {
+    "_comment": "A real permissionless stock->USDG market on core (proof the rails work today). Reproduce every number from market(id)/position/price()/borrowRateView.",
+    "market": "TSLA -> USDG",
+    "id": "0xf4dff250826a86627545e5c6594b3b249db3ad2ec5eed56c02833d2a67acf445",
+    "marketParams": {
+      "loanToken": "0x5fc5360d0400a0fd4f2af552add042d716f1d168",
+      "collateralToken": "0x322F0929c4625eD5bAd873c95208D54E1c003b2d",
+      "oracle": "0x280855A5BF983bf005f19992C157007930B3de2A",
+      "irm": "0x2BD3d5965B26B51814AC95127B2b80dD6CcC0fa1",
+      "lltv": "770000000000000000"
+    }
+  }
+}
