@@ -22,7 +22,12 @@ Do this **before** sending value. Trust the pinned commit + these on-chain check
 
 ## 5. Vault (only if you deposit for yield)
 The factory recognizing a vault proves only that the **shell** is canonical — NOT that its config is safe.
-- Confirm the vault is recognized by `vaultV2Factory` (Robinhood Chain uses **Vault V2**, not MetaMorpho v1.1).
+- Confirm the vault is recognized by `vaultV2Factory` (Robinhood Chain uses **Vault V2**, not MetaMorpho v1.1):
+  `cast call <vaultV2Factory> "isVaultV2(address)(bool)" <vault>` must return `true`.
+- Governance getters on the vault itself (not part of the ERC-4626 ABI): `owner()(address)`,
+  `curator()(address)`, `asset()(address)`. Timelocks are per-selector:
+  `timelock(bytes4)(uint256)` with the selector of the guarded function.
+- Vault shares are 18-decimal even though USDG is 6-decimal: `deposit(3e6 assets)` mints ~`3e18` shares.
 - Independently audit `owner`, `curator`, `guardian`/`sentinel`, `timelock`, and **every** market in its supply/withdraw queues and caps. A canonical shell with a hostile curator can still route deposits into a bad market.
 
 ## Bottom line

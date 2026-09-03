@@ -256,3 +256,17 @@ list it, its positions earn no points, and no Solon keeper or liquidation infras
 it. Anyone can supply to or borrow from it — including adversaries who understand your oracle
 better than you do. If you want a certified venue for stock collateral, use the SOLON CERTIFIED
 markets; if you want raw freedom, this is how you take it.
+
+
+## Practical gotchas (from live agent test runs)
+
+- **Repaying by shares:** the no-dust close is `repay(marketParams, 0, borrowShares, user, "")` — you
+  don't know the exact asset amount up front, so approve your debt **plus ~1% headroom** first, and
+  optionally zero the leftover allowance afterwards.
+- **Gas on Robinhood Chain (Arbitrum Orbit):** the base fee moves quickly; sending with a stale
+  `maxFeePerGas` gets `max fee per gas less than block base fee`. Re-read the base fee right before
+  sending and add headroom (2x is fine, the surplus is refunded).
+- **Explorer access:** robinhoodchain.blockscout.com is Cloudflare-gated for non-browser clients.
+  Use raw `eth_getLogs` against the public RPC for discovery (respect the ~130 logs/block cap).
+- **Acquiring stock tokens:** see the `dex` section of `addresses.json` — quote via QuoterV2 across
+  the listed fee tiers, execute via SwapRouter02 `exactInputSingle`.
