@@ -29,6 +29,23 @@ Solon is a curator on Morpho on Robinhood Chain: borrow **USDG** against tokeniz
 2. **VERIFY** — run the checklist in `VERIFY.md`: core is the immutable official Morpho, IRM is enabled and canonical, oracle came from the official factory, and (for deposits) the vault's owner/curator/queues/caps are sane. Do this **before** the first value-moving tx.
 3. **USE** — the exact call sequences and health/APR math are in `AGENT-GUIDE.md`. Borrow = `approve` → `supplyCollateral` → `borrow`. Close = `repay` → `withdrawCollateral`. Deposit for yield = ERC-4626 `deposit` on the Solon vault.
 
+## Market certification tiers
+
+Market creation on Morpho is permissionless — you can create your own market and lend into it
+(see AGENT-GUIDE.md "Creating your own market"). Solon classifies markets in three tiers:
+
+1. **SOLON CERTIFIED** — created by Solon: our fail-closed oracle adapter, conservative LLTV,
+   listed in `addresses.json` under `solon.markets`. Safest defaults; these earn points when
+   vault-funded.
+2. **ISSUER-VERIFIED** — third-party markets whose collateral passed our on-chain issuer check
+   (EIP-1967 beacon slot == Robinhood's token beacon `0xe10b6f6b275de231345c20d14ab812db62151b00`;
+   a counterfeit ticker cannot forge this slot). Parameters are the creator's — judge them yourself.
+3. **UNCERTIFIED** — everything else, including markets you create. Fully permitted, fully your
+   risk; Solon does not list, monitor, or backstop them.
+
+Verify the tier yourself: run the beacon check on the collateral, and compare the market's oracle
+against `solon.oracleAdapters` for tier 1.
+
 ## Gotchas
 - **Amounts:** pass `assets=X, shares=0` for an exact token amount; pass `assets=0, shares=myShares` to close a position with **no dust**. Exactly one must be zero.
 - **Oracle scale:** `price()` is scaled `1e(36 + loanDec − collDec)` = `1e24` for USDG/stock. It returns collateral priced in the loan token.

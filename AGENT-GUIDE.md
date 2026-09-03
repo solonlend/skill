@@ -239,3 +239,20 @@ An agent can reproduce every number above from `market(id)`, `position(id,me)`, 
 - Verify the market/vault config **before** the first tx, not after.
 
 *Built on Morpho Blue (GPL-2.0). "Built on Morpho" is nominative use — not affiliated with or endorsed by Morpho. Solon's only new on-chain code is the ~80-line StockOracleAdapter (open, byte-diffable).*
+
+
+## Creating your own market
+
+Market creation is permissionless. To open a market and lend into it directly:
+
+1. Pick parameters: `marketParams = (loanToken, collateralToken, oracle, irm, lltv)`.
+   `irm` must be the enabled AdaptiveCurveIRM; `lltv` must be an enabled tier
+   (`core.isLltvEnabled`). The oracle is entirely your choice — and entirely your risk.
+2. `core.createMarket(marketParams)` — one transaction, no approval needed.
+3. Lend with `core.supply`, or post collateral and borrow as usual.
+
+Rules of engagement: a market you create is UNCERTIFIED (see SKILL.md tiers). Solon will not
+list it, its positions earn no points, and no Solon keeper or liquidation infrastructure watches
+it. Anyone can supply to or borrow from it — including adversaries who understand your oracle
+better than you do. If you want a certified venue for stock collateral, use the SOLON CERTIFIED
+markets; if you want raw freedom, this is how you take it.

@@ -1,5 +1,5 @@
 {
-  "_comment": "Solon on Robinhood Chain. Machine-readable, pinned. VERIFY every address on-chain (see VERIFY.md) before sending value — do not trust this file blindly.",
+  "_comment": "Solon on Robinhood Chain. Machine-readable, pinned. VERIFY every address on-chain (see VERIFY.md) before sending value \u2014 do not trust this file blindly.",
   "verifiedAt": "2026-09-03",
   "chain": {
     "name": "Robinhood Chain",
@@ -26,23 +26,52 @@
     "_vaultNote": "Robinhood Chain runs Morpho Vault V2 (vaultV2Factory), NOT classic MetaMorpho v1.1. No v1.1 factory exists on 4663."
   },
   "tokens": {
-    "USDG": { "address": "0x5fc5360d0400a0fd4f2af552add042d716f1d168", "decimals": 6, "role": "loan token (the only borrowable asset)" },
-    "AAPL": { "address": "0xaf3d76f1834a1d425780943c99ea8a608f8a93f9", "decimals": 18, "chainlinkFeed": "0x6B22A786bAa607d76728168703a39Ea9C99f2cD0", "poolDepth": "~$1.15M" },
-    "NVDA": { "address": "0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec", "decimals": 18, "chainlinkFeed": "0x379EC4f7C378F34a1B47E4F3cbeBCbAC3E8E9F15", "poolDepth": "~$4.30M" },
-    "TSLA": { "address": "0x322F0929c4625eD5bAd873c95208D54E1c003b2d", "decimals": 18, "chainlinkFeed": "0x4A1166a659A55625345e9515b32adECea5547C38" },
-    "MSFT": { "address": "0xe93237c50d904957cf27e7b1133b510c669c2e74", "decimals": 18, "chainlinkFeed": "0x45C3C877C15E6BA2EBB19eA114Ea508d14C1Af2E" },
-    "META": { "address": "0xc0d6457c16cc70d6790dd43521c899c87ce02f35", "decimals": 18, "chainlinkFeed": "0x7C38C00C30BEe9378381E7B6135d7283356D71b1" },
+    "USDG": {
+      "address": "0x5fc5360d0400a0fd4f2af552add042d716f1d168",
+      "decimals": 6,
+      "role": "loan token (the only borrowable asset)"
+    },
+    "AAPL": {
+      "address": "0xaf3d76f1834a1d425780943c99ea8a608f8a93f9",
+      "decimals": 18,
+      "chainlinkFeed": "0x6B22A786bAa607d76728168703a39Ea9C99f2cD0",
+      "poolDepth": "~$1.15M"
+    },
+    "NVDA": {
+      "address": "0xd0601ce157db5bdc3162bbac2a2c8af5320d9eec",
+      "decimals": 18,
+      "chainlinkFeed": "0x379EC4f7C378F34a1B47E4F3cbeBCbAC3E8E9F15",
+      "poolDepth": "~$4.30M"
+    },
+    "TSLA": {
+      "address": "0x322F0929c4625eD5bAd873c95208D54E1c003b2d",
+      "decimals": 18,
+      "chainlinkFeed": "0x4A1166a659A55625345e9515b32adECea5547C38"
+    },
+    "MSFT": {
+      "address": "0xe93237c50d904957cf27e7b1133b510c669c2e74",
+      "decimals": 18,
+      "chainlinkFeed": "0x45C3C877C15E6BA2EBB19eA114Ea508d14C1Af2E"
+    },
+    "META": {
+      "address": "0xc0d6457c16cc70d6790dd43521c899c87ce02f35",
+      "decimals": 18,
+      "chainlinkFeed": "0x7C38C00C30BEe9378381E7B6135d7283356D71b1"
+    },
     "USDG_feed": "0x61B7e5650328764B076A108EFF5fa7282a1B9aD2"
   },
   "solon": {
-    "_status": "M1 — set at deploy",
-    "usdgVault": "TBD",
-    "oracleAdapters": { "AAPL": "TBD", "NVDA": "TBD" },
-    "feeRecipient": "TBD",
-    "liquidationBot": "TBD",
-    "markets": { "AAPL_USDG_id": "TBD", "NVDA_USDG_id": "TBD" },
-    "lltv": "385000000000000000",
-    "lltvPercent": 38.5
+    "_status": "live since 2026-09-03",
+    "usdgVault": "0xCBB61788fB5A1969C93A222B1a12E4D1A50c6d99",
+    "vaultAdapter": "0x00e53F320C446d00188D45f415EA71304e419C92",
+    "oracleAdapters": {
+      "AAPL": "0x4f6185269EbcAD4cFA0371d63b29d923956E60AC"
+    },
+    "markets": {
+      "AAPL_USDG_385": "0x3b788195cc0f5eb987e14d91d9b8875cf742c55faf9822ae25701f71a3ed7133"
+    },
+    "insuranceFund": "0x750A0e73139A0cc062eaC29C1fc615d659E85246",
+    "performanceFee": "15% to insuranceFund"
   },
   "liveExample": {
     "_comment": "A real permissionless stock->USDG market on core (proof the rails work today). Reproduce every number from market(id)/position/price()/borrowRateView.",
