@@ -101,6 +101,17 @@
  },
  "leveragedFarms": {
    "_comment": "Separate farm contracts, not Morpho. Root verifiedAt/tokens lending-only claims do not certify these records. Reject TBD before approve/send; never substitute Sepolia for mainnet. See FARM-GUIDE.md.",
+   "oracleTargetConfig": {
+     "contract": "LpShareOracleV4",
+     "riskMaxStaleness": 93600,
+     "stableMaxStaleness": 93600,
+     "stableDepegBps": 50,
+     "sources": [
+       "stocklend/leverage/docs/FINDING-rh-eth-feed-staleness-2026-09-06.md",
+       "stocklend/leverage/DEPLOY-CHECKLIST.md \u00a71.10"
+     ],
+     "note": "Confirmed target, not an on-chain read. Sepolia recordedConfig is historical and differs; verify actual deployment before use."
+   },
    "robinhoodMainnet": {
      "chainId": 4663,
      "status": "TBD_NOT_READY",
@@ -126,6 +137,9 @@
      "sourceCommitNote": "Deployment record says based on a3549af; current exported ABI revision may differ. Verify runtime and wiring.",
      "contracts": {
        "uniV3DualVault": "0x76C3F4730098dfAc400125E7ae16636C566B8009",
+       "uniV4DualVault": "<TBD>",
+       "uniV3LeverageVault": "<TBD>",
+       "uniV4LeverageVault": "<TBD>",
        "lendingPool": "0x1C8331c1DE3BF11CCc68Fb763b1054e891BF450e",
        "lpShareOracleV4": "0xd68B55abA9BF89094035fcB0A1dc0585A85c9fd4",
        "swapExecutorV3": "0x67b8D557411CdC09D059A54AdeB2500713A4e693",

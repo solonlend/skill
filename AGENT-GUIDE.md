@@ -274,10 +274,12 @@ markets; if you want raw freedom, this is how you take it.
 
 ---
 
-## §10 · Leveraged LP farms — Dual-Borrow (WETH + USDG)
+## §10 · Leveraged LP farms — single-asset and Dual-Borrow
 
-The new farm module borrows both LP legs and manages concentrated-liquidity positions; the preceding Morpho lending modules, certification and historical code/audit claims keep their original scope. Farm mainnet addresses are **<TBD>**; the Sepolia record is a test-only example, not a mainnet fallback.
+The farm module supports LOAN-only investment/borrowing with a zap (single-asset V3/V4) and borrowing both LP legs (Dual-Borrow V3/V4), managing concentrated-liquidity positions; the preceding Morpho lending modules, certification and historical code/audit claims keep their original scope. Farm mainnet addresses are **<TBD>**; the Sepolia record is a test-only example, not a mainnet fallback.
 
-1. **READ** — [FARM-GUIDE.md](FARM-GUIDE.md): product/roles, position and dual-reserve views, debt-utilization health, two liquidation boundaries and per-leg oracle freshness. Load `addresses.json.leveragedFarms` and the farm ABIs listed in `abis/FARM-ABI-SOURCES.json`.
+1. **READ** — [FARM-GUIDE.md](FARM-GUIDE.md): product/roles, single/dual position and reserve views, debt-utilization health, shape-specific liquidation models and per-leg oracle freshness. Load `addresses.json.leveragedFarms` and the farm ABIs listed in `abis/FARM-ABI-SOURCES.json`.
 2. **VERIFY** — follow the farm guide's deployment/config checklist and the pinned-commit, on-chain re-verification discipline of `VERIFY.md`; Morpho factory checks do not certify these contracts. Reject TBD addresses before approvals.
-3. **USE** — exact V3 dual `open`, `previewClose` → `close`, `increase`, `addMargin`, `rebalance`, `harvest` sequences, approvals and protection limits are in the farm guide; V4/single-asset signatures are distinct. Leverage can be liquidated; §9 wallet/key rules and the US/China/sanctioned-jurisdiction access policy apply equally here.
+3. **USE** — exact single-asset V3/V4 `open`, `close`, `increase`, `harvest` call sequences and V3 dual `open`, `previewClose` → `close`, `increase`, `addMargin`, `rebalance`, `harvest` sequences are in the farm guide, alongside V4 dual routing. Single-asset vaults have no addMargin/rebalance/previewClose or public debt/health getter; compute health from positionValue, the single debtId current debt and LLTV. Single-asset health changes with price even in-range; dual range-matched volatility resistance does not apply. Leverage can be liquidated; §9 wallet/key rules and the US/China/sanctioned-jurisdiction access policy apply equally here.
+
+For verified **LpShareOracleV4** wiring, the confirmed target is risk staleness **26h / 93600s**, stable staleness **26h / 93600s**, USDG depeg band **50bps / ±0.5%** (FINDING-rh-eth-feed-staleness-2026-09-06 and DEPLOY-CHECKLIST §1.10 in the leverage repository). Verify actual getters; dated Sepolia settings are historical evidence, not the target.

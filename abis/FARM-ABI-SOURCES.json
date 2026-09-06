@@ -1,5 +1,5 @@
 {
-  "_comment": "Full local compiler ABIs; pool/feed are minimal source interfaces. Not evidence of deployed bytecode, audit or permission. Re-verify deployment before use. No network accessed.",
+  "_comment": "Full local compiler ABIs; pool/feed are minimal source interfaces. Not evidence of deployed bytecode, audit or permission. Re-verify deployment before use. No network accessed. Per-export sourceCommit overrides the legacy top-level sourceCommit; single-asset artifact source keccak256 hashes were checked against local files before export.",
   "sourceRepository": "stocklend/leverage",
   "sourceCommit": "54adbe908a8b68f9100ac7b4e3bfe5a5ad6930fb",
   "exports": {
@@ -488,6 +488,140 @@
         "src/libraries/TickMath.sol": {
           "keccak256": "0x200a20b98e3d3747cac22f2d4f1d2f4cf425781e9a437737827025a5aec1d10b",
           "sha256": "b349499b258aa347d9c2267e5bd866dbfbfc9134689cc3b3eb2130d8cc8b4926"
+        }
+      }
+    },
+    "uni-v3-leverage-vault.json": {
+      "contract": "UniV3LeverageVault",
+      "artifact": "out/UniV3LeverageVault.sol/UniV3LeverageVault.json",
+      "sourceCommit": "845fac6f90e2294899b79bbf7f4788edbf7aeb2f",
+      "compiler": "0.8.24+commit.e11b9ed9",
+      "settings": {
+        "remappings": [
+          "@ensdomains/=lib/v4-core/node_modules/@ensdomains/",
+          "@openzeppelin/=lib/v4-core/lib/openzeppelin-contracts/",
+          "ds-test/=lib/v4-core/lib/forge-std/lib/ds-test/src/",
+          "forge-std/=lib/forge-std/src/",
+          "hardhat/=lib/v4-core/node_modules/hardhat/",
+          "solmate/=lib/v4-core/lib/solmate/",
+          "v4-core/=lib/v4-core/src/"
+        ],
+        "optimizer": {
+          "enabled": true,
+          "runs": 80
+        },
+        "metadata": {
+          "bytecodeHash": "ipfs"
+        },
+        "compilationTarget": {
+          "src/UniV3LeverageVault.sol": "UniV3LeverageVault"
+        },
+        "evmVersion": "cancun",
+        "libraries": {},
+        "viaIR": true
+      },
+      "abiSha256": "2584ab043b72c67ec8299e40f47eb880564e53f0fca100dee91df2e0d8d92c3d",
+      "sources": {
+        "src/LpShareOracle.sol": {
+          "keccak256": "0x37011c068c1f6bf721489dacc24c4fa5f76f76e329eb6410d9ac9c198b52af3f",
+          "sha256": "47d40746f79e3a978abe5e111dbaaee20d203ae815eee31516f1a2c2bdafbcb0"
+        },
+        "src/UniV3LeverageVault.sol": {
+          "keccak256": "0x5c1d8740a755f47740405311e911e5a395637a124726c55fcd40be89b3c0fa91",
+          "sha256": "77f0cbe7df80b3753be9c0d91c1f95a7a444d9528c06b04defcd3e3143120508"
+        },
+        "src/libraries/FairLpMath.sol": {
+          "keccak256": "0x64626372cd690159445da44ca06572b4c658b2e9701337a3930deda8659bb2d3",
+          "sha256": "4f448608adb6604a47b638312c3e8771fbf5064253c6c26984034305893e5a69"
+        },
+        "src/libraries/FullMath.sol": {
+          "keccak256": "0xb77f5a775da4366804e77b977add630e3cea24a0d90927461bffdd7dbd5b9897",
+          "sha256": "0136058a3f9c0b2c5a3451a91c4190caba0becc05fe720b90df73d8fa1cda14a"
+        },
+        "src/libraries/LiquidityAmounts.sol": {
+          "keccak256": "0x288af321200ea7477c35863ca907cef2fb4b20a0dd101dac0e67e457cb4e85f7",
+          "sha256": "76d03b0e67bff132d1d3b4efe1976dbcc226c5426131c96914dfceab02df8b76"
+        },
+        "src/libraries/SettlementMath.sol": {
+          "keccak256": "0x795058ba7360a082915e05fff5d97a5ad4745e428a90de2206637fe35897a655",
+          "sha256": "efa1bc2616388bf4bbf8bb999660a34e772ebee742064b4ab7009da512f82b0e"
+        },
+        "src/libraries/Sqrt.sol": {
+          "keccak256": "0xc1ae0ea5f30fdfdd33ecec4ad9931b0a775ad9a8ff290c4a8ee7f7c06fa23e58",
+          "sha256": "30b71218680099733ef7b77c961773a138f91a474e70056baca3da65b073eb87"
+        },
+        "src/libraries/TickMath.sol": {
+          "keccak256": "0x200a20b98e3d3747cac22f2d4f1d2f4cf425781e9a437737827025a5aec1d10b",
+          "sha256": "b349499b258aa347d9c2267e5bd866dbfbfc9134689cc3b3eb2130d8cc8b4926"
+        }
+      }
+    },
+    "uni-v4-leverage-vault.json": {
+      "contract": "UniV4LeverageVault",
+      "artifact": "out/UniV4LeverageVault.sol/UniV4LeverageVault.json",
+      "sourceCommit": "845fac6f90e2294899b79bbf7f4788edbf7aeb2f",
+      "compiler": "0.8.24+commit.e11b9ed9",
+      "settings": {
+        "remappings": [
+          "@ensdomains/=lib/v4-core/node_modules/@ensdomains/",
+          "@openzeppelin/=lib/v4-core/lib/openzeppelin-contracts/",
+          "ds-test/=lib/v4-core/lib/forge-std/lib/ds-test/src/",
+          "forge-std/=lib/forge-std/src/",
+          "hardhat/=lib/v4-core/node_modules/hardhat/",
+          "solmate/=lib/v4-core/lib/solmate/",
+          "v4-core/=lib/v4-core/src/"
+        ],
+        "optimizer": {
+          "enabled": true,
+          "runs": 80
+        },
+        "metadata": {
+          "bytecodeHash": "ipfs"
+        },
+        "compilationTarget": {
+          "src/UniV4LeverageVault.sol": "UniV4LeverageVault"
+        },
+        "evmVersion": "cancun",
+        "libraries": {},
+        "viaIR": true
+      },
+      "abiSha256": "92664ec110f1a298892e244849ed54899d98c07babc0cfbf969ede56af0cd0fe",
+      "sources": {
+        "src/LpShareOracle.sol": {
+          "keccak256": "0x37011c068c1f6bf721489dacc24c4fa5f76f76e329eb6410d9ac9c198b52af3f",
+          "sha256": "47d40746f79e3a978abe5e111dbaaee20d203ae815eee31516f1a2c2bdafbcb0"
+        },
+        "src/UniV4LeverageVault.sol": {
+          "keccak256": "0x91e396f8434d0f959a7d8a5745a6f768e4ad78d305a8f082f1d77e3f76ad5249",
+          "sha256": "8f06a86804ab130699fd8db8fd44160aa8b441cb59551f4e8884d9de5624fc1c"
+        },
+        "src/libraries/FairLpMath.sol": {
+          "keccak256": "0x64626372cd690159445da44ca06572b4c658b2e9701337a3930deda8659bb2d3",
+          "sha256": "4f448608adb6604a47b638312c3e8771fbf5064253c6c26984034305893e5a69"
+        },
+        "src/libraries/FullMath.sol": {
+          "keccak256": "0xb77f5a775da4366804e77b977add630e3cea24a0d90927461bffdd7dbd5b9897",
+          "sha256": "0136058a3f9c0b2c5a3451a91c4190caba0becc05fe720b90df73d8fa1cda14a"
+        },
+        "src/libraries/LiquidityAmounts.sol": {
+          "keccak256": "0x288af321200ea7477c35863ca907cef2fb4b20a0dd101dac0e67e457cb4e85f7",
+          "sha256": "76d03b0e67bff132d1d3b4efe1976dbcc226c5426131c96914dfceab02df8b76"
+        },
+        "src/libraries/SettlementMath.sol": {
+          "keccak256": "0x795058ba7360a082915e05fff5d97a5ad4745e428a90de2206637fe35897a655",
+          "sha256": "efa1bc2616388bf4bbf8bb999660a34e772ebee742064b4ab7009da512f82b0e"
+        },
+        "src/libraries/Sqrt.sol": {
+          "keccak256": "0xc1ae0ea5f30fdfdd33ecec4ad9931b0a775ad9a8ff290c4a8ee7f7c06fa23e58",
+          "sha256": "30b71218680099733ef7b77c961773a138f91a474e70056baca3da65b073eb87"
+        },
+        "src/libraries/TickMath.sol": {
+          "keccak256": "0x200a20b98e3d3747cac22f2d4f1d2f4cf425781e9a437737827025a5aec1d10b",
+          "sha256": "b349499b258aa347d9c2267e5bd866dbfbfc9134689cc3b3eb2130d8cc8b4926"
+        },
+        "src/v4/V4Periphery.sol": {
+          "keccak256": "0xa701efda5232705b78f175e27943b7a70eb507e9e6aa69f40cde9f46e833e980",
+          "sha256": "da6c7de06fa9aeb34db056ff1b3ef3f8b45f5d68ef018b034002087266deca08"
         }
       }
     }
