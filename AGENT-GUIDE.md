@@ -270,3 +270,14 @@ markets; if you want raw freedom, this is how you take it.
   Use raw `eth_getLogs` against the public RPC for discovery (respect the ~130 logs/block cap).
 - **Acquiring stock tokens:** see the `dex` section of `addresses.json` — quote via QuoterV2 across
   the listed fee tiers, execute via SwapRouter02 `exactInputSingle`.
+
+
+---
+
+## §10 · Leveraged LP farms — Dual-Borrow (WETH + USDG)
+
+The new farm module borrows both LP legs and manages concentrated-liquidity positions; the preceding Morpho lending modules, certification and historical code/audit claims keep their original scope. Farm mainnet addresses are **<TBD>**; the Sepolia record is a test-only example, not a mainnet fallback.
+
+1. **READ** — [FARM-GUIDE.md](FARM-GUIDE.md): product/roles, position and dual-reserve views, debt-utilization health, two liquidation boundaries and per-leg oracle freshness. Load `addresses.json.leveragedFarms` and the farm ABIs listed in `abis/FARM-ABI-SOURCES.json`.
+2. **VERIFY** — follow the farm guide's deployment/config checklist and the pinned-commit, on-chain re-verification discipline of `VERIFY.md`; Morpho factory checks do not certify these contracts. Reject TBD addresses before approvals.
+3. **USE** — exact V3 dual `open`, `previewClose` → `close`, `increase`, `addMargin`, `rebalance`, `harvest` sequences, approvals and protection limits are in the farm guide; V4/single-asset signatures are distinct. Leverage can be liquidated; §9 wallet/key rules and the US/China/sanctioned-jurisdiction access policy apply equally here.

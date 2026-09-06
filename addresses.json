@@ -98,5 +98,59 @@
    10000
   ],
   "note": "Most stock/USDG pools sit at the 100 or 500 tier. The block explorer (robinhoodchain.blockscout.com) is Cloudflare-gated for non-browser clients: discover pools and history via raw eth_getLogs against the RPC instead (~130 logs/block cap applies)."
+ },
+ "leveragedFarms": {
+   "_comment": "Separate farm contracts, not Morpho. Root verifiedAt/tokens lending-only claims do not certify these records. Reject TBD before approve/send; never substitute Sepolia for mainnet. See FARM-GUIDE.md.",
+   "robinhoodMainnet": {
+     "chainId": 4663,
+     "status": "TBD_NOT_READY",
+     "verifiedAt": null,
+     "contracts": {
+       "uniV3DualVault": "<TBD>",
+       "uniV4DualVault": "<TBD>",
+       "uniV3LeverageVault": "<TBD>",
+       "uniV4LeverageVault": "<TBD>",
+       "lendingPool": "<TBD>",
+       "lpShareOracleV4": "<TBD>",
+       "swapExecutorV3": "<TBD>",
+       "addressRegistry": "<TBD>",
+       "solonVaultRegistry": "<TBD>"
+     },
+     "note": "Deployment/config/dependency addresses must be filled and verified on-chain after mainnet deployment; no farm is asserted live."
+   },
+   "sepoliaExample": {
+     "chainId": 11155111,
+     "status": "EXAMPLE_ONLY_UNVERIFIED_OFFLINE",
+     "verifiedAt": null,
+     "source": "stocklend/leverage/deployments/sepolia-2026-09-06.md",
+     "sourceCommitNote": "Deployment record says based on a3549af; current exported ABI revision may differ. Verify runtime and wiring.",
+     "contracts": {
+       "uniV3DualVault": "0x76C3F4730098dfAc400125E7ae16636C566B8009",
+       "lendingPool": "0x1C8331c1DE3BF11CCc68Fb763b1054e891BF450e",
+       "lpShareOracleV4": "0xd68B55abA9BF89094035fcB0A1dc0585A85c9fd4",
+       "swapExecutorV3": "0x67b8D557411CdC09D059A54AdeB2500713A4e693",
+       "addressRegistry": "0x0ebF2fc43f81C4cACf067F5A596F97A9799A8Cfc",
+       "solonVaultRegistry": "0x178Af5B07d71bf844de4B9F74dE4B01c403c8DF1",
+       "pool": "0x81ffB0C7127e90212f85cc825e9ecA8056A28A02",
+       "riskToken": "0x5Fb4b5AA8f408389cA96E7e5B9cFF014A8176563",
+       "loanToken": "0xB89b8f4d12bDFf564FF475832DE683dAF0911cDb",
+       "riskFeed": "0xda4fBd8E37A4e6666E63696329D2c2FDd06cF5D7",
+       "loanFeed": "0x185dbe09e2CfA8853E8074aE3b5462fe6dFC1580",
+       "eTokenLoan": "0x8ba02bE6667bF09cbebF9086366Ca0b74B4e76AD",
+       "eTokenRisk": "0x7a7B12A7a289ca780C1d0b83ea737AE37E0fe2c1"
+     },
+     "recordedConfig": {
+       "reserveRisk": 2,
+       "reserveLoan": 1,
+       "vaultId": 1,
+       "loanIsC0": false,
+       "fee": 100,
+       "lltv": "770000000000000000",
+       "riskMaxStaleness": 10800,
+       "stableMaxStaleness": 93600,
+       "stableDepegBps": 100
+     },
+     "note": "Mock WETH/USDG and feeds; test-only. Config is a dated record, not live reads. V4 and single-asset addresses are not supplied by this record; no fallback inferred."
+   }
  }
 }

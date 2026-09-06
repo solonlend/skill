@@ -1,0 +1,495 @@
+{
+  "_comment": "Full local compiler ABIs; pool/feed are minimal source interfaces. Not evidence of deployed bytecode, audit or permission. Re-verify deployment before use. No network accessed.",
+  "sourceRepository": "stocklend/leverage",
+  "sourceCommit": "54adbe908a8b68f9100ac7b4e3bfe5a5ad6930fb",
+  "exports": {
+    "uni-v3-dual-vault.json": {
+      "contract": "UniV3DualVault",
+      "artifact": "out/UniV3DualVault.sol/UniV3DualVault.json",
+      "compiler": "0.8.24+commit.e11b9ed9",
+      "settings": {
+        "remappings": [
+          "@ensdomains/=lib/v4-core/node_modules/@ensdomains/",
+          "@openzeppelin/=lib/v4-core/lib/openzeppelin-contracts/",
+          "ds-test/=lib/v4-core/lib/forge-std/lib/ds-test/src/",
+          "forge-std/=lib/forge-std/src/",
+          "hardhat/=lib/v4-core/node_modules/hardhat/",
+          "solmate/=lib/v4-core/lib/solmate/",
+          "v4-core/=lib/v4-core/src/"
+        ],
+        "optimizer": {
+          "enabled": true,
+          "runs": 80
+        },
+        "metadata": {
+          "bytecodeHash": "ipfs"
+        },
+        "compilationTarget": {
+          "src/UniV3DualVault.sol": "UniV3DualVault"
+        },
+        "evmVersion": "cancun",
+        "libraries": {},
+        "viaIR": true
+      },
+      "abiSha256": "119a6eb33b8fb4f487a10a6facc61277905a99997f1cfbe30c05d91b43b28f0a",
+      "sources": {
+        "src/UniV3DualVault.sol": {
+          "keccak256": "0xa85614b52b39c65e30e84dd034294c7a42549a27549b6e6a144910f542b4da70",
+          "sha256": "06b53e0a3d65ff4b8515247a01cd0a7baec3dd3fdb861be6f9bd7ac7cce6a48e"
+        },
+        "src/libraries/FullMath.sol": {
+          "keccak256": "0xb77f5a775da4366804e77b977add630e3cea24a0d90927461bffdd7dbd5b9897",
+          "sha256": "0136058a3f9c0b2c5a3451a91c4190caba0becc05fe720b90df73d8fa1cda14a"
+        },
+        "src/libraries/LiquidationSurplus.sol": {
+          "keccak256": "0x6a778df711b0526d7dfa5a87441bb7c9621e326164edf16c56d05f38f625c743",
+          "sha256": "ccd30f8593e13d0107ca8bb3b5f18ad33244d7fae550ac83f3c1ff600f252a0d"
+        },
+        "src/libraries/LiquidityAmounts.sol": {
+          "keccak256": "0x288af321200ea7477c35863ca907cef2fb4b20a0dd101dac0e67e457cb4e85f7",
+          "sha256": "76d03b0e67bff132d1d3b4efe1976dbcc226c5426131c96914dfceab02df8b76"
+        },
+        "src/libraries/SettlementMath.sol": {
+          "keccak256": "0x795058ba7360a082915e05fff5d97a5ad4745e428a90de2206637fe35897a655",
+          "sha256": "efa1bc2616388bf4bbf8bb999660a34e772ebee742064b4ab7009da512f82b0e"
+        },
+        "src/libraries/TickMath.sol": {
+          "keccak256": "0x200a20b98e3d3747cac22f2d4f1d2f4cf425781e9a437737827025a5aec1d10b",
+          "sha256": "b349499b258aa347d9c2267e5bd866dbfbfc9134689cc3b3eb2130d8cc8b4926"
+        }
+      }
+    },
+    "uni-v4-dual-vault.json": {
+      "contract": "UniV4DualVault",
+      "artifact": "out/UniV4DualVault.sol/UniV4DualVault.json",
+      "compiler": "0.8.24+commit.e11b9ed9",
+      "settings": {
+        "remappings": [
+          "@ensdomains/=lib/v4-core/node_modules/@ensdomains/",
+          "@openzeppelin/=lib/v4-core/lib/openzeppelin-contracts/",
+          "ds-test/=lib/v4-core/lib/forge-std/lib/ds-test/src/",
+          "forge-std/=lib/forge-std/src/",
+          "hardhat/=lib/v4-core/node_modules/hardhat/",
+          "solmate/=lib/v4-core/lib/solmate/",
+          "v4-core/=lib/v4-core/src/"
+        ],
+        "optimizer": {
+          "enabled": true,
+          "runs": 80
+        },
+        "metadata": {
+          "bytecodeHash": "ipfs"
+        },
+        "compilationTarget": {
+          "src/UniV4DualVault.sol": "UniV4DualVault"
+        },
+        "evmVersion": "cancun",
+        "libraries": {},
+        "viaIR": true
+      },
+      "abiSha256": "510be3e3c9aec90d29d02390b20feb4d8980b12ba27ba04de6943ca316588295",
+      "sources": {
+        "src/UniV4DualVault.sol": {
+          "keccak256": "0x5627bdbe15486e976fa002676e2a95af7e7a52814eee64fc6545f6796152ebc9",
+          "sha256": "0220e5b06afc0a8293eea7743cdaa30703ee9f7b5bdf26e38643fedb0df242f1"
+        },
+        "src/libraries/FullMath.sol": {
+          "keccak256": "0xb77f5a775da4366804e77b977add630e3cea24a0d90927461bffdd7dbd5b9897",
+          "sha256": "0136058a3f9c0b2c5a3451a91c4190caba0becc05fe720b90df73d8fa1cda14a"
+        },
+        "src/libraries/LiquidationSurplus.sol": {
+          "keccak256": "0x6a778df711b0526d7dfa5a87441bb7c9621e326164edf16c56d05f38f625c743",
+          "sha256": "ccd30f8593e13d0107ca8bb3b5f18ad33244d7fae550ac83f3c1ff600f252a0d"
+        },
+        "src/libraries/LiquidityAmounts.sol": {
+          "keccak256": "0x288af321200ea7477c35863ca907cef2fb4b20a0dd101dac0e67e457cb4e85f7",
+          "sha256": "76d03b0e67bff132d1d3b4efe1976dbcc226c5426131c96914dfceab02df8b76"
+        },
+        "src/libraries/LpMathExt.sol": {
+          "keccak256": "0xcaaea7d66ddb2ef3fddcaf0a1c6249571754e5987593c8af05c90a513307f583",
+          "sha256": "0be5cc04d5e04865085a1685973fa384fca3f82644e0222f806aacba816b0831"
+        },
+        "src/libraries/SettlementMath.sol": {
+          "keccak256": "0x795058ba7360a082915e05fff5d97a5ad4745e428a90de2206637fe35897a655",
+          "sha256": "efa1bc2616388bf4bbf8bb999660a34e772ebee742064b4ab7009da512f82b0e"
+        },
+        "src/libraries/TickMath.sol": {
+          "keccak256": "0x200a20b98e3d3747cac22f2d4f1d2f4cf425781e9a437737827025a5aec1d10b",
+          "sha256": "b349499b258aa347d9c2267e5bd866dbfbfc9134689cc3b3eb2130d8cc8b4926"
+        },
+        "src/v4/V4Periphery.sol": {
+          "keccak256": "0xa701efda5232705b78f175e27943b7a70eb507e9e6aa69f40cde9f46e833e980",
+          "sha256": "da6c7de06fa9aeb34db056ff1b3ef3f8b45f5d68ef018b034002087266deca08"
+        }
+      }
+    },
+    "lp-share-oracle-v4.json": {
+      "contract": "LpShareOracleV4",
+      "artifact": "out/LpShareOracleV4.sol/LpShareOracleV4.json",
+      "compiler": "0.8.24+commit.e11b9ed9",
+      "settings": {
+        "remappings": [
+          "@ensdomains/=lib/v4-core/node_modules/@ensdomains/",
+          "@openzeppelin/=lib/v4-core/lib/openzeppelin-contracts/",
+          "ds-test/=lib/v4-core/lib/forge-std/lib/ds-test/src/",
+          "forge-std/=lib/forge-std/src/",
+          "hardhat/=lib/v4-core/node_modules/hardhat/",
+          "solmate/=lib/v4-core/lib/solmate/",
+          "v4-core/=lib/v4-core/src/"
+        ],
+        "optimizer": {
+          "enabled": true,
+          "runs": 80
+        },
+        "metadata": {
+          "bytecodeHash": "ipfs"
+        },
+        "compilationTarget": {
+          "src/LpShareOracleV4.sol": "LpShareOracleV4"
+        },
+        "evmVersion": "cancun",
+        "libraries": {},
+        "viaIR": true
+      },
+      "abiSha256": "1edcaed4e3dc0b7f290ea068cc923f21aee1d743fe73c8e0942596d9b819420d",
+      "sources": {
+        "src/LpShareOracleV4.sol": {
+          "keccak256": "0x1285a5c88d381f0f8ac00bba19f81dcbe8f5757a302f15811245cadd3c2aea56",
+          "sha256": "e48d352d720db18ffab996c06c7232800d01e019e73a4a9e21d4e0964f9d0155"
+        },
+        "src/libraries/FairLpMath.sol": {
+          "keccak256": "0x64626372cd690159445da44ca06572b4c658b2e9701337a3930deda8659bb2d3",
+          "sha256": "4f448608adb6604a47b638312c3e8771fbf5064253c6c26984034305893e5a69"
+        },
+        "src/libraries/FullMath.sol": {
+          "keccak256": "0xb77f5a775da4366804e77b977add630e3cea24a0d90927461bffdd7dbd5b9897",
+          "sha256": "0136058a3f9c0b2c5a3451a91c4190caba0becc05fe720b90df73d8fa1cda14a"
+        },
+        "src/libraries/LiquidityAmounts.sol": {
+          "keccak256": "0x288af321200ea7477c35863ca907cef2fb4b20a0dd101dac0e67e457cb4e85f7",
+          "sha256": "76d03b0e67bff132d1d3b4efe1976dbcc226c5426131c96914dfceab02df8b76"
+        },
+        "src/libraries/Sqrt.sol": {
+          "keccak256": "0xc1ae0ea5f30fdfdd33ecec4ad9931b0a775ad9a8ff290c4a8ee7f7c06fa23e58",
+          "sha256": "30b71218680099733ef7b77c961773a138f91a474e70056baca3da65b073eb87"
+        },
+        "src/libraries/TickMath.sol": {
+          "keccak256": "0x200a20b98e3d3747cac22f2d4f1d2f4cf425781e9a437737827025a5aec1d10b",
+          "sha256": "b349499b258aa347d9c2267e5bd866dbfbfc9134689cc3b3eb2130d8cc8b4926"
+        }
+      }
+    },
+    "lending-pool.json": {
+      "contract": "LendingPool",
+      "artifact": "out/LendingPool.sol/LendingPool.json",
+      "compiler": "0.8.24+commit.e11b9ed9",
+      "settings": {
+        "remappings": [
+          "@ensdomains/=lib/v4-core/node_modules/@ensdomains/",
+          "@openzeppelin/=lib/v4-core/lib/openzeppelin-contracts/",
+          "ds-test/=lib/v4-core/lib/forge-std/lib/ds-test/src/",
+          "forge-std/=lib/forge-std/src/",
+          "hardhat/=lib/v4-core/node_modules/hardhat/",
+          "solmate/=lib/v4-core/lib/solmate/",
+          "v4-core/=lib/v4-core/src/"
+        ],
+        "optimizer": {
+          "enabled": true,
+          "runs": 80
+        },
+        "metadata": {
+          "bytecodeHash": "ipfs"
+        },
+        "compilationTarget": {
+          "src/lending/lendingpool/LendingPool.sol": "LendingPool"
+        },
+        "evmVersion": "cancun",
+        "libraries": {},
+        "viaIR": true
+      },
+      "abiSha256": "ef2ce25a211027d657228b36932ab8d9a47f048299768a8a26167cb082ceb3f4",
+      "sources": {
+        "src/lending/Payments.sol": {
+          "keccak256": "0x65ac8625c7510f387ed598facfb0d49b3486b74d08c50ca18fcba010ec4adafb",
+          "sha256": "c926a302dd3e6835c27bb49ff1881e24562a1c5784a1a7c37bf7d48a73150aa3"
+        },
+        "src/lending/address-registry/AddressRegistry.sol": {
+          "keccak256": "0x0a8c0c1788a6a7a19520c17d591c0a3cde859e731b16859e0025d8e658814c14",
+          "sha256": "89d2f5efd44e7f6f9b1c3434d878031393c0bda5cffe0669b3ccafffefd6614c"
+        },
+        "src/lending/external/openzeppelin/contracts/access/Ownable.sol": {
+          "keccak256": "0xb557b71fe746c789156698b258d79253a509d227176f562bfea6cab01cc6a4e6",
+          "sha256": "e3c3fd60be764bf7ffdb7b03eddf59c135acfd54d54813e56f75e746f503df2e"
+        },
+        "src/lending/external/openzeppelin/contracts/security/ReentrancyGuard.sol": {
+          "keccak256": "0x190dd6f8d592b7e4e930feb7f4313aeb8e1c4ad3154c27ce1cf6a512fc30d8cc",
+          "sha256": "3b30604df38d0f9b2b281a3e6661eb1b9cd577579e66225c674df21ca5b89b2c"
+        },
+        "src/lending/external/openzeppelin/contracts/token/ERC20/ERC20.sol": {
+          "keccak256": "0x02bd627f1a89abf2115beb74f243754d5457c6b676f586c55635b222ad5bce10",
+          "sha256": "caf4b6fef84e7cdbf05d82df64302dba6b60c04a88be48765c64579502d294a3"
+        },
+        "src/lending/external/openzeppelin/contracts/token/ERC20/IERC20.sol": {
+          "keccak256": "0xbe7e8c250bbebe46299f337b29c535ce00d67fe289eb03d84ebbd74934eec19f",
+          "sha256": "b846c01cc75246905c26b60f172f10ca92ccf4a0ddb7391fd75d5e44fd94ebab"
+        },
+        "src/lending/external/openzeppelin/contracts/token/ERC20/extensions/IERC20Metadata.sol": {
+          "keccak256": "0x8de418a5503946cabe331f35fe242d3201a73f67f77aaeb7110acb1f30423aca",
+          "sha256": "af5c8a77965cc82c33b7ff844deb9826166689e55dc037a7f2f790d057811990"
+        },
+        "src/lending/external/openzeppelin/contracts/token/ERC20/extensions/draft-IERC20Permit.sol": {
+          "keccak256": "0xf41ca991f30855bf80ffd11e9347856a517b977f0a6c2d52e6421a99b7840329",
+          "sha256": "3e7aa0e0f69eec8f097ad664d525e7b3f0a3fda8dcdd97de5433ddb131db86ef"
+        },
+        "src/lending/external/openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol": {
+          "keccak256": "0x7b14c1177ceef6f43ea85967050257c10e6fd1226da70316879f13d91ea39836",
+          "sha256": "8dbce0129325f8596e404f7d903555c7ffe56e0937371cf0ebbdd8af95237c4c"
+        },
+        "src/lending/external/openzeppelin/contracts/utils/Address.sol": {
+          "keccak256": "0xe731a2cd5e80ed4fc64e3c68dc3d57b821a8a37b15441988ed6c23a042a92b96",
+          "sha256": "e8e8297a55f494a1a122977a601fa6ae8dde1ce58030c8a6d56bcf3f5b9f1cfa"
+        },
+        "src/lending/external/openzeppelin/contracts/utils/Context.sol": {
+          "keccak256": "0xe2e337e6dde9ef6b680e07338c493ebea1b5fd09b43424112868e9cc1706bca7",
+          "sha256": "1458c260d010a08e4c20a4a517882259a23a4baa0b5bd9add9fb6d6a1549814a"
+        },
+        "src/lending/external/openzeppelin/contracts/utils/math/Math.sol": {
+          "keccak256": "0xe06fc1b69b61c7da2fe4bd625ab95c37c20cfe2aa78ee4899025fac12a5cad6b",
+          "sha256": "4b21213f19fcbd272466aa9a3d29976e9992e5a342d6bcdfe87aa6635786b396"
+        },
+        "src/lending/external/openzeppelin/contracts/utils/math/SafeMath.sol": {
+          "keccak256": "0x5648dcaf7dc1f1c43ddd49a3def8d95d42cbc47b557e8d0f692e08982565ff36",
+          "sha256": "314fe4aa0e804a5ce9d48c1c3a01160abfdd8f9211d621e3dc3bd6f5d70e2896"
+        },
+        "src/lending/interfaces/IAddressRegistry.sol": {
+          "keccak256": "0xc8821d2e10fb87841a0f8aae77491a6307f5f33398481e86ea8d6304d65a6d5d",
+          "sha256": "f3ee0eac24f3d349223fb66ddc5fd1a78df3aa8df92abb4eace437da507ca343"
+        },
+        "src/lending/interfaces/IExtraInterestBearingToken.sol": {
+          "keccak256": "0x03d75f2c3e97ace8c2b1529360be414114fd3df4b300dec20d9bc6ed710a30e0",
+          "sha256": "1c2f48dde18682ba9e7145a2d81cbf16128de06057a8fc36aeae8ae10952ef9f"
+        },
+        "src/lending/interfaces/ILendingPool.sol": {
+          "keccak256": "0xdb25ab977fe584d89f5a91d15c2e9586e1306028b536d6e801c69ed76d1dd83f",
+          "sha256": "139e2182ad8cae2301ea14db769202a332d2e9c719cc8ed533967f3edf1fce8f"
+        },
+        "src/lending/interfaces/IStakingRewards.sol": {
+          "keccak256": "0xe0ee8e29eb7cdad3a9f3c92cc283d501194cd0566ef699b8b238c1dfcfe5760e",
+          "sha256": "41c69cd2212cb6c24e5fad774ee253250bd9c22b7444a52cfaccef55f7f45676"
+        },
+        "src/lending/interfaces/IVaultFactory.sol": {
+          "keccak256": "0x50da5c8aedba268f22d5a501ddc845f167805307f02c37bab08727d6aaaeb173",
+          "sha256": "832d1fb238ff9a782e2cf571a4681accd1270da1c2f1f4dc4041799c638d777c"
+        },
+        "src/lending/interfaces/IWETH9.sol": {
+          "keccak256": "0x5c7f5d0fd08f943b17a0807420426fac5196650c643c6083d4a65860f590b9e8",
+          "sha256": "21fb8bd3676fae65372fe033737bd41174fc2af4ada2ebc902e5f03235551247"
+        },
+        "src/lending/lendingpool/ExtraInterestBearingToken.sol": {
+          "keccak256": "0x8e560d7cdc0a08b04386161284fd2f5c878cdea9397cea263f732654a6b56a7e",
+          "sha256": "f7767be5ed02a070da9672061c11f953e21c03b8d6b77c25192ee78e353f7b3a"
+        },
+        "src/lending/lendingpool/LendingPool.sol": {
+          "keccak256": "0x6fa835f7d8ce5a815f1e0ff0bf8d3df9a4cea02c080592083934e9ba2131bcb4",
+          "sha256": "48092dac352efe9bf3e6328c63fb1c5e99f7e929ed3abffdd4d5f050024f003a"
+        },
+        "src/lending/lendingpool/StakingRewards.sol": {
+          "keccak256": "0x77ecc89c88442a0a153d66f3e964c902e637bf0231d30fecf1ea094a7357c3bb",
+          "sha256": "972446b081dfeaeba98b7fcd4565dc0fc0db40dcf7a5c994ed1d558e92bc290a"
+        },
+        "src/lending/libraries/Constants.sol": {
+          "keccak256": "0xd4820d1234b7a757051be434ff54426cac42a793774a87fea5147299440ab502",
+          "sha256": "67408192d771b601655a2e36097693989c9f2dd15b7c357c0022042cbadb1311"
+        },
+        "src/lending/libraries/Precision.sol": {
+          "keccak256": "0x904e58e7ff452123f8aee9a0fc6b6d12ccf21f50995a1aadc31349c78e7d284a",
+          "sha256": "f1d3a09655bf9697201c55bd2fe911b184f71f44f32642d213c41599a4826cd7"
+        },
+        "src/lending/libraries/TransferHelper.sol": {
+          "keccak256": "0xbddfb52c0f644f92c2bcf21cb950052faf23d05fab0bf2ae9763d6d63dec7f17",
+          "sha256": "a07f7cc656aa8b283bfd8e0d43c9f227d7ad18d0167ae06b6005937ca06b3f4e"
+        },
+        "src/lending/libraries/helpers/AddressId.sol": {
+          "keccak256": "0x29fe0065bfa524005bbad938bafec12eb69236d538fbed6717dea3ada9391a31",
+          "sha256": "7cd8705a6ba9163252af5e698213f7b81f929dd63fedb573de5c0e7f095ff6bc"
+        },
+        "src/lending/libraries/helpers/Errors.sol": {
+          "keccak256": "0xa7728b558c86b3646f91905bc074e67780983c650b88e4125628514bd5dc6a98",
+          "sha256": "338bcf99e1c880e189ba1b9938aa024bf194f44b0165de596a318e1bbf57a08a"
+        },
+        "src/lending/libraries/logic/ETokenDeployer.sol": {
+          "keccak256": "0x0627a305da9a3d5bc38ac576b63c38530e17efdeffad7a96cf620f6d2587f9ff",
+          "sha256": "598f32e54bb44af5a460c8773ca21e031e5102120bcfb74c80cc23e2864f861c"
+        },
+        "src/lending/libraries/logic/InterestRateUtils.sol": {
+          "keccak256": "0xdecdcfc99f55e0f59be0f5c32042e3405b883798d6fda28b6634b14ab3fbac2a",
+          "sha256": "a2e63821f1075336b5587feff46b773fc55a10d6b58279452362f22742887ca9"
+        },
+        "src/lending/libraries/logic/ReserveKey.sol": {
+          "keccak256": "0x3736a08d61266c86c4d44895a14ec3ee15e2955422918e01f20ca3b9756bbce1",
+          "sha256": "17651392476ada7ce6efd54899620da972bf7013b640677187692fae29aa4e73"
+        },
+        "src/lending/libraries/logic/ReserveLogic.sol": {
+          "keccak256": "0xc5a710e419e0ffb5812cda4d0c63a6ce86987567f4b07d6bb8a4223a21d75ea4",
+          "sha256": "b35accaac2b5ff0858fcdd7b554395db5dc70d4f38d450256cfd84b6b13fe080"
+        },
+        "src/lending/libraries/logic/StakingRewardsDeployer.sol": {
+          "keccak256": "0x1ae9f34d33b7a988e74e4dbbce682e387b968e2ee379d046c966eff0bed97093",
+          "sha256": "2e73d48e7c2ae44c8081f25b64d78388893d18af258622c7ef34d3968e579b06"
+        },
+        "src/lending/libraries/types/DataTypes.sol": {
+          "keccak256": "0x7017919400987851f2a99487efe580aaa3c387efc6fa2ef00bb72a4dd8f7b41f",
+          "sha256": "35f60924a68e87de8347946b4d63bd5cfbf89b07962b0f3f5f5766499420915c"
+        }
+      }
+    },
+    "swap-executor-v3.json": {
+      "contract": "SwapExecutorV3",
+      "artifact": "out/SwapExecutorV3.sol/SwapExecutorV3.json",
+      "compiler": "0.8.24+commit.e11b9ed9",
+      "settings": {
+        "remappings": [
+          "@ensdomains/=lib/v4-core/node_modules/@ensdomains/",
+          "@openzeppelin/=lib/v4-core/lib/openzeppelin-contracts/",
+          "ds-test/=lib/v4-core/lib/forge-std/lib/ds-test/src/",
+          "forge-std/=lib/forge-std/src/",
+          "hardhat/=lib/v4-core/node_modules/hardhat/",
+          "solmate/=lib/v4-core/lib/solmate/",
+          "v4-core/=lib/v4-core/src/"
+        ],
+        "optimizer": {
+          "enabled": true,
+          "runs": 80
+        },
+        "metadata": {
+          "bytecodeHash": "ipfs"
+        },
+        "compilationTarget": {
+          "src/SwapExecutorV3.sol": "SwapExecutorV3"
+        },
+        "evmVersion": "cancun",
+        "libraries": {},
+        "viaIR": true
+      },
+      "abiSha256": "79a220c4825762c945bcfe7dc3be0284caeddfa32f1c022f5086aa2cbc772b62",
+      "sources": {
+        "src/SwapExecutorV3.sol": {
+          "keccak256": "0x6bcd367bddff48a75830ab7e022cd1042aee3efbfb7265da82d828bb2dc10ec6",
+          "sha256": "828914d154b5fed3ba4831772e2a2df1fa9fbc30c1971a2ab48be3bcb11fd08d"
+        }
+      }
+    },
+    "farm-v3-pool.json": {
+      "contract": "IUniV3Pool",
+      "artifact": "out/UniV3DualVault.sol/IUniV3Pool.json",
+      "compiler": "0.8.24+commit.e11b9ed9",
+      "settings": {
+        "remappings": [
+          "@ensdomains/=lib/v4-core/node_modules/@ensdomains/",
+          "@openzeppelin/=lib/v4-core/lib/openzeppelin-contracts/",
+          "ds-test/=lib/v4-core/lib/forge-std/lib/ds-test/src/",
+          "forge-std/=lib/forge-std/src/",
+          "hardhat/=lib/v4-core/node_modules/hardhat/",
+          "solmate/=lib/v4-core/lib/solmate/",
+          "v4-core/=lib/v4-core/src/"
+        ],
+        "optimizer": {
+          "enabled": true,
+          "runs": 80
+        },
+        "metadata": {
+          "bytecodeHash": "ipfs"
+        },
+        "compilationTarget": {
+          "src/UniV3DualVault.sol": "IUniV3Pool"
+        },
+        "evmVersion": "cancun",
+        "libraries": {},
+        "viaIR": true
+      },
+      "abiSha256": "e432d4f9aed73817b19eb23624d6e2adc8f785e7ea62906acec59664f7450edf",
+      "sources": {
+        "src/UniV3DualVault.sol": {
+          "keccak256": "0xa85614b52b39c65e30e84dd034294c7a42549a27549b6e6a144910f542b4da70",
+          "sha256": "06b53e0a3d65ff4b8515247a01cd0a7baec3dd3fdb861be6f9bd7ac7cce6a48e"
+        },
+        "src/libraries/FullMath.sol": {
+          "keccak256": "0xb77f5a775da4366804e77b977add630e3cea24a0d90927461bffdd7dbd5b9897",
+          "sha256": "0136058a3f9c0b2c5a3451a91c4190caba0becc05fe720b90df73d8fa1cda14a"
+        },
+        "src/libraries/LiquidationSurplus.sol": {
+          "keccak256": "0x6a778df711b0526d7dfa5a87441bb7c9621e326164edf16c56d05f38f625c743",
+          "sha256": "ccd30f8593e13d0107ca8bb3b5f18ad33244d7fae550ac83f3c1ff600f252a0d"
+        },
+        "src/libraries/LiquidityAmounts.sol": {
+          "keccak256": "0x288af321200ea7477c35863ca907cef2fb4b20a0dd101dac0e67e457cb4e85f7",
+          "sha256": "76d03b0e67bff132d1d3b4efe1976dbcc226c5426131c96914dfceab02df8b76"
+        },
+        "src/libraries/SettlementMath.sol": {
+          "keccak256": "0x795058ba7360a082915e05fff5d97a5ad4745e428a90de2206637fe35897a655",
+          "sha256": "efa1bc2616388bf4bbf8bb999660a34e772ebee742064b4ab7009da512f82b0e"
+        },
+        "src/libraries/TickMath.sol": {
+          "keccak256": "0x200a20b98e3d3747cac22f2d4f1d2f4cf425781e9a437737827025a5aec1d10b",
+          "sha256": "b349499b258aa347d9c2267e5bd866dbfbfc9134689cc3b3eb2130d8cc8b4926"
+        }
+      }
+    },
+    "farm-chainlink-feed.json": {
+      "contract": "IAggregatorV3",
+      "artifact": "out/LpShareOracleV4.sol/IAggregatorV3.json",
+      "compiler": "0.8.24+commit.e11b9ed9",
+      "settings": {
+        "remappings": [
+          "@ensdomains/=lib/v4-core/node_modules/@ensdomains/",
+          "@openzeppelin/=lib/v4-core/lib/openzeppelin-contracts/",
+          "ds-test/=lib/v4-core/lib/forge-std/lib/ds-test/src/",
+          "forge-std/=lib/forge-std/src/",
+          "hardhat/=lib/v4-core/node_modules/hardhat/",
+          "solmate/=lib/v4-core/lib/solmate/",
+          "v4-core/=lib/v4-core/src/"
+        ],
+        "optimizer": {
+          "enabled": true,
+          "runs": 80
+        },
+        "metadata": {
+          "bytecodeHash": "ipfs"
+        },
+        "compilationTarget": {
+          "src/LpShareOracleV4.sol": "IAggregatorV3"
+        },
+        "evmVersion": "cancun",
+        "libraries": {},
+        "viaIR": true
+      },
+      "abiSha256": "6c18d7d4306d7d61736d0008084d867648290e38290d5194af4a59ac51a5b33f",
+      "sources": {
+        "src/LpShareOracleV4.sol": {
+          "keccak256": "0x1285a5c88d381f0f8ac00bba19f81dcbe8f5757a302f15811245cadd3c2aea56",
+          "sha256": "e48d352d720db18ffab996c06c7232800d01e019e73a4a9e21d4e0964f9d0155"
+        },
+        "src/libraries/FairLpMath.sol": {
+          "keccak256": "0x64626372cd690159445da44ca06572b4c658b2e9701337a3930deda8659bb2d3",
+          "sha256": "4f448608adb6604a47b638312c3e8771fbf5064253c6c26984034305893e5a69"
+        },
+        "src/libraries/FullMath.sol": {
+          "keccak256": "0xb77f5a775da4366804e77b977add630e3cea24a0d90927461bffdd7dbd5b9897",
+          "sha256": "0136058a3f9c0b2c5a3451a91c4190caba0becc05fe720b90df73d8fa1cda14a"
+        },
+        "src/libraries/LiquidityAmounts.sol": {
+          "keccak256": "0x288af321200ea7477c35863ca907cef2fb4b20a0dd101dac0e67e457cb4e85f7",
+          "sha256": "76d03b0e67bff132d1d3b4efe1976dbcc226c5426131c96914dfceab02df8b76"
+        },
+        "src/libraries/Sqrt.sol": {
+          "keccak256": "0xc1ae0ea5f30fdfdd33ecec4ad9931b0a775ad9a8ff290c4a8ee7f7c06fa23e58",
+          "sha256": "30b71218680099733ef7b77c961773a138f91a474e70056baca3da65b073eb87"
+        },
+        "src/libraries/TickMath.sol": {
+          "keccak256": "0x200a20b98e3d3747cac22f2d4f1d2f4cf425781e9a437737827025a5aec1d10b",
+          "sha256": "b349499b258aa347d9c2267e5bd866dbfbfc9134689cc3b3eb2130d8cc8b4926"
+        }
+      }
+    }
+  }
+}
