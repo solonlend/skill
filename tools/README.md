@@ -107,11 +107,46 @@ with `solon-farm-read.mjs`, and note their post-action health is still enforced 
 projected health number is fail-closed: it is withheld (shown as *unavailable*) when either feed
 is stale/invalid, the feed decimals differ, or USDG is outside its de-peg band.
 
+## Market info (`solon-market.mjs`)
+
+The lending-side reader: given a Morpho market id it returns the market's live params, APY,
+tier, and an **automated run of the `VERIFY.md` checks** with the actual on-chain values —
+replacing hand-assembled verification and APR math with one provenance-tagged read.
+
+```sh
+node solon-market.mjs \
+  --rpc https://rpc.mainnet.chain.robinhood.com/rpc \
+  --market 0x3b788195cc0f5eb987e14d91d9b8875cf742c55faf9822ae25701f71a3ed7133 \
+  [--account <borrower>] [--block <n>] [--json]
+```
+
+It reports:
+- **Params + state** — `idToMarketParams`, `market()` totals, utilization.
+- **APY** — borrow APY from `AdaptiveCurveIrm.borrowRateView` annualized as
+  `(1 + ratePerSecond/WAD)^31536000 − 1` (BigInt, floored per multiply; a display figure, **not**
+  Morpho's Taylor accrual or a forecast), and supply APY `= borrowAPY · utilization · (1 − fee)`.
+  APY is **oracle-independent**: it is reported even when the collateral oracle is opaque/stale
+  (which only suppresses the price and borrower health).
+- **Tier** — SOLON CERTIFIED (oracle ∈ `solon.oracleAdapters` and market ∈ `solon.markets`),
+  ISSUER-VERIFIED (collateral EIP-1967 beacon slot == the Robinhood token beacon), else UNCERTIFIED.
+- **VERIFY checks** — core immutable (real bytecode, empty proxy/beacon slots), `core.owner()` ==
+  expected, IRM canonical + `isIrmEnabled` + `irm.MORPHO() == core`, `isLltvEnabled(lltv)`, market
+  fee cap, and oracle provenance (tier-1 adapter match; UNVERIFIED for non-certified markets).
+  Each check carries the value it read. Two items are honestly reported as UNVERIFIED because they
+  cannot be proven from ABI alone (absence of extra owner powers; factory membership for
+  third-party oracles) — they require a bytecode-identity comparison.
+- **Provenance** — pinned block + hash on every figure; fail-closed on a bad oracle read.
+
+Read-only, no keys, no transactions; RPC URLs are stripped from all output. `--json` emits the
+full structured snapshot to stdout; the human summary goes to stderr.
+
 Offline verification from the repository root:
 
 ```sh
 node --test tools/lib/farm-math.test.mjs
 node --test tools/lib/farm-project.test.mjs
+node --test tools/lib/market-math.test.mjs
 node --check tools/solon-farm-read.mjs
 node --check tools/solon-farm-sim.mjs
+node --check tools/solon-market.mjs
 ```
