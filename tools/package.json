@@ -4,8 +4,9 @@
   "type": "module",
   "engines": { "node": ">=22" },
   "scripts": {
-    "test": "node --test lib/farm-math.test.mjs",
-    "read": "node solon-farm-read.mjs"
+    "test": "node --test lib/*.test.mjs",
+    "read": "node solon-farm-read.mjs",
+    "sim": "node solon-farm-sim.mjs"
   },
   "dependencies": { "viem": "2.56.3" }
 }

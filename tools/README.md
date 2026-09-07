@@ -63,9 +63,55 @@ Replace the illustrative entry block and equity with your saved entry observatio
 
 **This is an estimate/reference. Always cross-check live contract state; a simulation is not a mined result.** No runtime/source match or audit certification is implied. Retained debt IDs after a receipt burn can represent bad debt; inspect `BadDebt` events separately. FARM-GUIDE's access policy applies.
 
+## Pre-broadcast simulation (`solon-farm-sim.mjs`)
+
+Static-preview a dual-borrow farm operation **before** broadcasting. It runs the exact
+vault call as an `eth_call` from a given address (no wallet, no signing, no transaction,
+no key) at a pinned block and reports two things:
+
+1. **Pre-flight verdict** — `WILL_SUCCEED` (with any return value, e.g. `open`'s NFT id),
+   or `WILL_REVERT` with the decoded vault error. The vault's 22 custom errors decode by
+   name (`UnhealthyOpen`, `UnhealthyIncrease`, `SlippageLiq`, `RangeTooNarrow`, `NotHolder`,
+   `SolventBadDebt`, …), with a plain-language hint; standard `Error(string)`/`Panic` and the
+   lending pool's numeric codes pass through as-is. A successful pre-flight proves the
+   on-chain post-action health check passed.
+2. **Projected health (open/increase, estimate)** — reusing `farm-math`, it projects the
+   resulting `V`/`D`/utilization/headroom and added liquidity from the intended amounts at
+   current spot. This is an **estimate**: it assumes the full invest+borrow deploys with no
+   same-leg surplus repay, so real net debt ≤ projected. The pre-flight, not this number, is
+   the health guarantee.
+
+```sh
+node solon-farm-sim.mjs \
+  --rpc https://ethereum-sepolia-rpc.publicnode.com \
+  --vault 0x76C3F4730098dfAc400125E7ae16636C566B8009 \
+  --from  <the caller/owner address> \
+  --op increase --id 4 \
+  --params '{"investRisk":"0","investLoan":"0","borrowRisk":"1000000000000000","borrowLoan":"2000000","amount0Min":"0","amount1Min":"0","minLiquidity":"0","deadline":"9999999999"}'
+```
+
+`--params` is **inline JSON only** (never a file path); all integer fields must be **strings**
+(an unquoted JSON bigint loses precision at parse time and is rejected). `--id` is required for
+every op except `open`. The human summary goes to stderr; `--json` additionally writes the
+structured object to stdout. Exit codes: `3` = `WILL_REVERT`, `4` = `SIMULATION_ERROR` (a
+transport / unavailable-historical-state / encoding failure — deliberately NOT reported as a
+revert), `1` = bad arguments. The `--params` schema per op matches the vault ABI tuple
+field-for-field. Swap-leg slippage quoting is intentionally omitted where no on-chain quoter is
+available; do not infer a swap quote from this tool. RPC URLs are stripped from all output
+(including errors), so an endpoint carrying an API key is never printed.
+
+**Scope (v1): `--kind dual-v3` only.** The V4-dual and single-asset vaults use different
+param tuples (V4 uses `amount*Max`; single uses `amountInvest`/`amountBorrow`/`zapPath`), so this
+tool rejects those kinds rather than silently mis-encoding a call for them; inspect those shapes
+with `solon-farm-read.mjs`, and note their post-action health is still enforced on-chain. The
+projected health number is fail-closed: it is withheld (shown as *unavailable*) when either feed
+is stale/invalid, the feed decimals differ, or USDG is outside its de-peg band.
+
 Offline verification from the repository root:
 
 ```sh
 node --test tools/lib/farm-math.test.mjs
+node --test tools/lib/farm-project.test.mjs
 node --check tools/solon-farm-read.mjs
+node --check tools/solon-farm-sim.mjs
 ```
