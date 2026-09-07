@@ -19,6 +19,18 @@ Extension of **AGENT-GUIDE §10**, in the same **READ → VERIFY → USE** order
 | `LpShareOracleV4` | Values LP and risk debt from external feeds with separate risk/stable staleness bounds and a USDG depeg band; also used by the V3 dual vault. |
 | `SwapExecutorV3` | Adapts vault gap/delta swaps to V3 SwapRouter02 exact-input/exact-output routes and refunds unused input. |
 
+## Fees, revenue and the custody boundary
+
+**Where protocol revenue comes from and how it is taken** (verify the live values on-chain; these are the mechanisms, not a rate promise):
+- **Harvest fee** — `HARVEST_FEE_BPS` of collected LP trading fees is skimmed on `harvest` and transferred **directly to the vault `GOVERNOR`** (no separate claim). Read `GOVERNOR()` and `HARVEST_FEE_BPS()`; a `harvest` deposits the governor's cut into the governor wallet in-kind (token0/token1).
+- **Borrow-interest reserve fee** — a per-reserve `reserveFeeRate` of accrued borrow interest is minted as **eTokens to the LendingPool treasury** (the `AddressRegistry` `TREASURY`, set to the governor at deploy). The treasury realizes it by calling `LendingPool.redeem()` on its eToken balance for the underlying, subject to available reserve liquidity like any withdrawal. Read the reserve's `reserveFeeRate` and the treasury address before assuming a value.
+- **Liquidation protocol fee** — `protocolFeeBps` is the protocol's retained share of the liquidation bonus. A soft launch may set it to **0** (whole bonus to the keeper so liquidations actually happen); read it, don't assume.
+
+**The custody boundary — what an operator can and cannot do:**
+- `close`, `increase`, `rebalance`, `harvest`, `addMargin` on a position are gated by `onlyHolder` (or are debt-repaying and open to a payer for `addMargin`). **No one — including the governor/curator — can force-close, seize, or unwind a healthy position they do not own.** There is no admin backdoor for this; it is the non-custodial guarantee.
+- `liquidate` requires `liquidators[caller] == true` **and** reverts `Healthy()` unless the position is actually unhealthy (`D > capacity`). A healthy position is never liquidatable.
+- Consequence for operations: a protocol cannot unilaterally retire user positions. To wind down, an operator with the right can `freezeReserve`/`deActivateReserve` to stop *new* borrows; existing positions remain until their holder closes them or they cross the liquidation boundary. An agent should therefore manage its **own** exit and never expect a hosted force-close.
+
 ## READ — resolve the position, debt and price
 
 Load `addresses.json.leveragedFarms` and `abis/FARM-ABI-SOURCES.json`; pick the chain and exact vault shape. **Mainnet farm addresses are `<TBD>`: stop before approvals or transfers.** Sepolia is an explicitly selected test-only example, chainId **11155111**, using mocks; never fall back to it from 4663. The top-level address-book `verifiedAt` covers the pre-existing lending snapshot, not the new farm records.
