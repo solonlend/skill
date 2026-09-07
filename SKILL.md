@@ -3,7 +3,7 @@ name: solon-lending
 description: Borrow USDG against tokenized US stocks (AAPL, NVDA, TSLA…) on Robinhood Chain, and earn on USDG deposits — by calling immutable Morpho contracts directly, no frontend or account. Load when an autonomous agent needs to open/manage a collateralized loan or deposit for yield on Robinhood Chain (chainId 4663).
 homepage: https://solonlend.xyz
 license: GPL-2.0
-version: 0.1.0
+version: 0.2.0
 pin: "Install by pinning a commit hash. This repo is the machine interface; the website is only a pointer to it."
 ---
 
@@ -30,6 +30,24 @@ For **leveraged LP farming** (LOAN-only single-asset V3/V4 with zap, and WETH + 
 1. **READ** — load `addresses.json` + the ABIs in `abis/`. Resolve the market: `marketParams = {loanToken:USDG, collateralToken:<stock>, oracle, irm, lltv}`; `id = keccak256(abi.encode(marketParams))`. Read `core.market(id)`, `core.position(id, you)`, `oracle.price()`.
 2. **VERIFY** — run the checklist in `VERIFY.md`: core is the immutable official Morpho, IRM is enabled and canonical, oracle came from the official factory, and (for deposits) the vault's owner/curator/queues/caps are sane. Do this **before** the first value-moving tx.
 3. **USE** — the exact call sequences and health/APR math are in `AGENT-GUIDE.md`. Borrow = `approve` → `supplyCollateral` → `borrow`. Close = `repay` → `withdrawCollateral`. Deposit for yield = ERC-4626 `deposit` on the Solon vault.
+
+## Runnable reference tools (`tools/`)
+
+The guides' read layer also exists as **runnable, byte-diffable reference code** (`cd tools && npm i`,
+Node 22+, viem pinned). All three are read-only — no keys, no transactions, RPC URLs stripped
+from output — and pin every figure to a block with feed/round provenance:
+
+- `solon-market.mjs` — a lending market's live params, borrow/supply APY, tier, and the
+  `VERIFY.md` checks run on-chain automatically with the actual values.
+- `solon-farm-read.mjs` — a leveraged-farm position's health, both liquidation boundaries,
+  net equity and PnL (all four vault shapes).
+- `solon-farm-sim.mjs` — static pre-flight of a farm op via `eth_call` before broadcasting:
+  WILL_SUCCEED / WILL_REVERT with the decoded vault error, plus projected post-op health
+  (dual-v3 in v1).
+
+They implement the math in these guides — diff them against the prose; `tools/README.md` has
+usage, schemas and caveats. They are estimates/references, not a hosted service: verify on-chain
+yourself before sending value.
 
 ## Market certification tiers
 
@@ -69,4 +87,5 @@ A fresh agent, given only this repo + a funded dedicated wallet, can: resolve a 
 - `VERIFY.md` — the "is this really official Morpho?" checklist.
 - `addresses.json` — pinned Robinhood Chain addresses (verify on-chain).
 - `adapter/StockOracleAdapter.sol` — Solon's only self-written on-chain code (open, byte-diffable).
+- `tools/` — runnable read-only reference CLIs: market info + automated VERIFY, farm position/health reader, pre-broadcast simulator.
 - Morpho docs: https://docs.morpho.org · SDKs: `@morpho-org/*` on npm.
