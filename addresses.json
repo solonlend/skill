@@ -114,20 +114,38 @@
    },
    "robinhoodMainnet": {
      "chainId": 4663,
-     "status": "TBD_NOT_READY",
-     "verifiedAt": null,
+     "status": "LIVE",
+     "verifiedAt": "2026-09-07",
+     "pool": "0x52e65B17fB6E5BA00Ed806f37Afcd2DaA50271Ca",
+     "poolFee": 100,
      "contracts": {
-       "uniV3DualVault": "<TBD>",
-       "uniV4DualVault": "<TBD>",
-       "uniV3LeverageVault": "<TBD>",
-       "uniV4LeverageVault": "<TBD>",
-       "lendingPool": "<TBD>",
-       "lpShareOracleV4": "<TBD>",
-       "swapExecutorV3": "<TBD>",
-       "addressRegistry": "<TBD>",
-       "solonVaultRegistry": "<TBD>"
+       "uniV3DualVault": "0x9Db7aDa64D1E8b856E15D916d886797501F28ce0",
+       "uniV3LeverageVault": "0x9e100d524DFEa1Aa76286A7F00682e72F79aC3aE",
+       "uniV4DualVault": "<not deployed>",
+       "uniV4LeverageVault": "<not deployed>",
+       "lendingPool": "0xA4af5515A7DE8E1661C92d3246296Ff3a48791Dd",
+       "lpShareOracleV4": "0x52b5728D1086b0B68d98DD51ee6544d87062Ef0f",
+       "swapExecutorV3": "0xe05d1c6AcbECe311c3A68D372F5f8A8FaCf8C6b2",
+       "addressRegistry": "0xf5e6DC8412aBFc9BcF41F86aABfEDf0a16163CB4",
+       "solonVaultRegistry": "0xe8Eb1EFb1EF33c4D55BA33701A9a234aD66ea065",
+       "eTokenLoanUSDG": "0x59286206faCD48E002a4e0EaC106998567071Ef3",
+       "eTokenRiskWETH": "0x2e3409b1d8068eB330437d89048b3d96D6379dac"
      },
-     "note": "Deployment/config/dependency addresses must be filled and verified on-chain after mainnet deployment; no farm is asserted live."
+     "vaultIds": { "uniV3DualVault": 1, "uniV3LeverageVault": 2 },
+     "reserves": { "loanUSDG": 1, "riskWETH": 2 },
+     "config": {
+       "lltv": "770000000000000000",
+       "liqBonusBps": 700,
+       "protocolFeeBps": 0,
+       "harvestFeeBps": 1000,
+       "closeFactorBps": 5000,
+       "loanReserveCapacity": "200000000",
+       "riskReserveCapacity": "50000000000000000",
+       "dualLoanCredit": "100000000",
+       "dualRiskCredit": "40000000000000000",
+       "singleLoanCredit": "60000000"
+     },
+     "note": "Live 2026-09-07: V3 dual-borrow + V3 single-borrow vaults sharing one LendingPool on the WETH/USDG fee100 pool. Scaled soft launch (200 USDG / 0.05 WETH reserve caps). Single deployer key = governor/keeper; no multisig, no external audit yet — small caps bound the risk. Re-verify every address on-chain (VERIFY.md + FARM-GUIDE.md) before sending value; config values here must be confirmed against the live contracts. V4 vaults are not deployed."
    },
    "sepoliaExample": {
      "chainId": 11155111,

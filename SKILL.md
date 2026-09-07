@@ -13,7 +13,7 @@ Solon is a curator on Morpho on Robinhood Chain: borrow **USDG** against tokeniz
 
 **Trust model:** trust the pinned commit + on-chain verification, never a live endpoint. Every address in `addresses.json` must be re-verified on-chain (`VERIFY.md`) before you send value. Solon cannot change the contracts under you (Morpho core & IRM are immutable); the trust surface is the vault curator and the market config — verify them.
 
-For **leveraged LP farming** (LOAN-only single-asset V3/V4 with zap, and WETH + USDG Dual-Borrow V3/V4, separate from the USDG-only Morpho lending scope below), load `AGENT-GUIDE.md §10` → `FARM-GUIDE.md` for farm-specific READ → VERIFY → USE, risk rules and chain-scoped addresses; mainnet farm deployments are TBD.
+For **leveraged LP farming** (LOAN-only single-asset V3/V4 with zap, and WETH + USDG Dual-Borrow V3/V4, separate from the USDG-only Morpho lending scope below), load `AGENT-GUIDE.md §10` → `FARM-GUIDE.md` for farm-specific READ → VERIFY → USE, risk rules and chain-scoped addresses. Live on Robinhood Chain since 2026-09-07: V3 dual-borrow + V3 single-borrow vaults (scaled soft launch); V4 vaults not deployed. Re-verify every address on-chain before value.
 
 ## When to use
 - An agent needs to draw USDG liquidity against a tokenized-stock position **without selling the stock**.
