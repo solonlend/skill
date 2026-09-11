@@ -7,14 +7,12 @@
 > router/quoter dependency removed: fees are charged and re-invested **in kind, two-sided,
 > zero swaps**.
 >
-> **Status (2026-09-11):** full lifecycle (deposit → fee harvest → range re-center → partial
-> and full withdraw, plus the NotCalm gate both blocking and releasing) verified on live
-> Sepolia — see the deployment record referenced below. **Robinhood Chain mainnet is NOT
-> deployed yet**; first-batch candidate pools: ETH/USDG 0.01%, NVDA/USDG 0.05%, GLD/USDG
-> 0.3%, SGOV/USDG 0.3%. `addresses.json → rangeVaults.robinhoodMainnet.vaults` is an
-> **empty list until launch** — while it is empty, any "Solon Auto LP" mainnet address you
-> meet elsewhere is not ours. The Sepolia drill instance is pinned in
-> `rangeVaults.sepoliaRehearsal` (mock tokens, value-free).
+> **Status (2026-09-11): LIVE on Robinhood Chain mainnet** — flagship WETH/USDG 0.01%
+> vault deployed with a real-money smoke pass (deposit → third-party harvest →
+> withdrawAll). Addresses are pinned in `addresses.json → rangeVaults.robinhoodMainnet`;
+> any address that does not match that pinned commit is not ours. Remaining first-batch
+> candidates (NVDA/GLD/SGOV) stay listed until deployed. The Sepolia drill instance is
+> pinned in `rangeVaults.sepoliaRehearsal` (mock tokens, value-free).
 
 Access policy: identical to `AGENT-GUIDE.md` — not offered to persons/entities in the US,
 China, or sanctioned jurisdictions; circumvention is a knowing violation by the accessing
@@ -100,8 +98,12 @@ vault.deposit(take0, take1, minShares)        // minShares: e.g. 99% of previewe
 (out0, out1) = vault.previewWithdraw(shares)
 vault.withdraw(shares, minOut0, minOut1)      // e.g. 99% of previewed outs
 ```
-- `minOut0`/`minOut1` bound each token independently (raw integer units), not total value;
-  99% of each previewed amount is a sane default. Never loosen them after a failure.
+- `minOut0`/`minOut1` bound each token independently (raw integer units), not total value.
+  **Live-tested caveat (RH mainnet, 2026-09-11):** on a fast pool the in-range token MIX
+  drifts quicker than a preview→broadcast round-trip, so 95-99% per-token floors can revert
+  (`TooMuchSlippage`) even though total value is fine — the vault never swaps, so mix drift
+  is not value loss. For scripted/agent flows use 80-90% per-token floors and send
+  immediately after a fresh preview; the same applies to `minShares` on deposit.
 - Edges to know: a withdraw sharing a **second** with any deposit into the strategy
   re-checks calm (strategy-level `lastDeposit`, not per-account — a stream of deposits can
   keep re-triggering it); and the exit path still *reads* `isCalm()` (a false result only
