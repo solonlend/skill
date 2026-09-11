@@ -15,6 +15,8 @@ Solon is a curator on Morpho on Robinhood Chain: borrow **USDG** against tokeniz
 
 For **leveraged LP farming** (LOAN-only single-asset V3/V4 with zap, and WETH + USDG Dual-Borrow V3/V4, separate from the USDG-only Morpho lending scope below), load `AGENT-GUIDE.md §10` → `FARM-GUIDE.md` for farm-specific READ → VERIFY → USE, risk rules and chain-scoped addresses. Live on Robinhood Chain since 2026-09-07: V3 dual-borrow + V3 single-borrow vaults (scaled soft launch); V4 vaults not deployed. Re-verify every address on-chain before value.
 
+For **Auto LP** (passive 1x auto-managed concentrated liquidity — no leverage, no liquidation, zero-swap compounding), load `AUTO-LP-GUIDE.md`. Lifecycle verified on live Sepolia; **Robinhood Chain mainnet not yet deployed** — until `addresses.json` carries a `rangeVaults` key, no mainnet Auto LP address is ours.
+
 ## When to use
 - An agent needs to draw USDG liquidity against a tokenized-stock position **without selling the stock**.
 - An agent manages a leveraged/collateralized position and must monitor health + auto-repay.
@@ -34,7 +36,7 @@ For **leveraged LP farming** (LOAN-only single-asset V3/V4 with zap, and WETH + 
 ## Runnable reference tools (`tools/`)
 
 The guides' read layer also exists as **runnable, byte-diffable reference code** (`cd tools && npm i`,
-Node 22+, viem pinned). All three are read-only — no keys, no transactions, RPC URLs stripped
+Node 22+, viem pinned). All four are read-only — no keys, no transactions, RPC URLs stripped
 from output — and pin every figure to a block with feed/round provenance:
 
 - `solon-market.mjs` — a lending market's live params, borrow/supply APY, tier, and the
@@ -44,6 +46,9 @@ from output — and pin every figure to a block with feed/round provenance:
 - `solon-farm-sim.mjs` — static pre-flight of a farm op via `eth_call` before broadcasting:
   WILL_SUCCEED / WILL_REVERT with the decoded vault error, plus projected post-op health
   (dual-v3 in v1).
+- `solon-range-read.mjs` — an Auto LP (CLM) vault's pinned-block snapshot: balances, share
+  value, calm state, managed range, pool price; with `--account` also shares + previewed
+  withdraw amounts.
 
 They implement the math in these guides — diff them against the prose; `tools/README.md` has
 usage, schemas and caveats. They are estimates/references, not a hosted service: verify on-chain
