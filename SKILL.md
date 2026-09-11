@@ -36,8 +36,9 @@ For **Auto LP** (passive 1x auto-managed concentrated liquidity — no leverage,
 ## Runnable reference tools (`tools/`)
 
 The guides' read layer also exists as **runnable, byte-diffable reference code** (`cd tools && npm i`,
-Node 22+, viem pinned). All four are read-only — no keys, no transactions, RPC URLs stripped
-from output — and pin every figure to a block with feed/round provenance:
+Node 22+, viem pinned). All four are read-only — no keys, no transactions — and pin every
+figure to a block (the lending/farm readers additionally carry feed/round provenance and
+strip RPC URLs from output):
 
 - `solon-market.mjs` — a lending market's live params, borrow/supply APY, tier, and the
   `VERIFY.md` checks run on-chain automatically with the actual values.
@@ -46,9 +47,9 @@ from output — and pin every figure to a block with feed/round provenance:
 - `solon-farm-sim.mjs` — static pre-flight of a farm op via `eth_call` before broadcasting:
   WILL_SUCCEED / WILL_REVERT with the decoded vault error, plus projected post-op health
   (dual-v3 in v1).
-- `solon-range-read.mjs` — an Auto LP (CLM) vault's pinned-block snapshot: balances, share
-  value, calm state, managed range, pool price; with `--account` also shares + previewed
-  withdraw amounts.
+- `solon-range-read.mjs` — an Auto LP (CLM) vault's pinned-block snapshot: balances,
+  total supply, calm state, managed range, pool price; with `--account` also shares +
+  previewed withdraw amounts.
 
 They implement the math in these guides — diff them against the prose; `tools/README.md` has
 usage, schemas and caveats. They are estimates/references, not a hosted service: verify on-chain

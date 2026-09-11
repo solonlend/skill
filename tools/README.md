@@ -150,3 +150,19 @@ node --check tools/solon-farm-read.mjs
 node --check tools/solon-farm-sim.mjs
 node --check tools/solon-market.mjs
 ```
+
+## solon-range-read.mjs — Auto LP (CLM) vault snapshot
+
+Read-only, single pinned block, no keys.
+
+```
+node solon-range-read.mjs --rpc <url> --vault <addr> [--account <addr>] [--json]
+```
+
+Reads the vault + its strategy: token pair and decimals, `balances()` (net of locked
+profit and pending fees), `totalSupply`, calm state, `paused`, managed range and pool
+price (decimals-corrected floats — the raw `price()` is 1e36-scaled in raw token units),
+`lastPositionAdjustment`; with `--account` also the account's shares and its
+`previewWithdraw` amounts. Exit 0 = snapshot produced, 1 = argument/transport failure.
+Guide: `AUTO-LP-GUIDE.md`. Unlike the lending/farm readers it carries no Chainlink
+feed/round provenance — the CLM tier reads no external oracle.

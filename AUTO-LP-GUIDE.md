@@ -1,7 +1,8 @@
 # Auto LP (Range Vaults / CLM) — agent guide
 
 > Passive tier: auto-managed Uniswap V3 concentrated liquidity at 1x. **No leverage, no
-> liquidation, no oracle dependency** — the calm gate uses the pool's own 2-minute TWAP.
+> liquidation, no external price oracle** — the calm gate relies on the pool's own TWAP
+> (interval and deviation bound are owner-tunable strategy parameters; read them, below).
 > Fork of Beefy's battle-tested `StrategyPassiveManagerUniswap` (MIT), with the swapper/
 > router/quoter dependency removed: fees are charged and re-invested **in kind, two-sided,
 > zero swaps**.
@@ -10,8 +11,10 @@
 > and full withdraw, plus the NotCalm gate both blocking and releasing) verified on live
 > Sepolia — see the deployment record referenced below. **Robinhood Chain mainnet is NOT
 > deployed yet**; first-batch candidate pools: ETH/USDG 0.01%, NVDA/USDG 0.05%, GLD/USDG
-> 0.3%, SGOV/USDG 0.3%. Addresses land in `addresses.json` under `rangeVaults` at launch —
-> until that key exists, any "Solon Auto LP" address you meet elsewhere is not ours.
+> 0.3%, SGOV/USDG 0.3%. `addresses.json → rangeVaults.robinhoodMainnet.vaults` is an
+> **empty list until launch** — while it is empty, any "Solon Auto LP" mainnet address you
+> meet elsewhere is not ours. The Sepolia drill instance is pinned in
+> `rangeVaults.sepoliaRehearsal` (mock tokens, value-free).
 
 Access policy: identical to `AGENT-GUIDE.md` — not offered to persons/entities in the US,
 China, or sanctioned jurisdictions; circumvention is a knowing violation by the accessing
@@ -40,21 +43,34 @@ party, human or agent.
 ## READ → VERIFY → USE
 
 **READ.** `vault.wants()` → the two tokens (order = pool token0/token1). `vault.balances()`
-→ total managed amounts. `vault.totalSupply()`, `vault.balanceOf(you)` → your share.
-`strategy.price()` (token1 per token0, 1e36-scaled), `strategy.range()` → managed band,
-`strategy.lastPositionAdjustment()`, `vault.isCalm()`. Runnable reference:
+→ total managed amounts, **minus** still-locked harvest profit and pending fees (see
+harvest, below). `vault.totalSupply()`, `vault.balanceOf(you)` → your share.
+`strategy.price()` → token1 raw units per token0 raw unit, 1e36-scaled: the human price is
+`price / 1e36 * 10^(decimals0 - decimals1)` — skipping the decimals term misreads any pair
+whose decimals differ. `strategy.range()` returns the managed band in the same scaling.
+`strategy.lastPositionAdjustment()`, `vault.isCalm()`, `strategy.twapInterval()` and
+`strategy.maxTickDeviation()` (both owner-settable; interval floor 60s). Runnable reference:
 `cd tools && node solon-range-read.mjs --rpc <url> --vault <addr> [--account <you>] [--json]`
 — pinned-block snapshot of all of the above.
 
-**VERIFY** (before value):
-1. `vault.strategy()` and the strategy's `vault()` point at each other; `strategy.pool()`
-   is the official-factory Uniswap V3 pool for the advertised pair/fee tier.
-2. The vault address matches the pinned `addresses.json` (`rangeVaults` key) — never an
-   address from a chat, site mirror, or search result.
-3. `strategy.paused()` is false; `vault.isCalm()` readable.
-4. Fee facts on-chain match this doc: deposit 0, withdrawal 0, performance fee 10% of
-   harvested yield (a slice of it is the public caller's incentive), charged only at
-   harvest, never from principal.
+**VERIFY** (before value — every step below is an executable on-chain read):
+1. `vault.strategy()` and `strategy.vault()` point at each other; `strategy.pool()` is the
+   official-factory Uniswap V3 pool for the advertised pair/fee tier — confirm with
+   `IUniswapV3Factory(pool.factory()).getPool(token0, token1, fee) == pool` against the
+   canonical Uniswap deployment for that chain.
+2. The vault address matches this repo at your pinned commit: mainnet vaults live in
+   `addresses.json → rangeVaults.robinhoodMainnet` (empty until launch — an empty list
+   means **no mainnet Auto LP address is ours**); the Sepolia drill instance lives in
+   `rangeVaults.sepoliaRehearsal`. Never accept an address from a chat, site mirror, or
+   search result.
+3. `strategy.paused()` is false; `vault.isCalm()` readable; read the calm parameters
+   `strategy.twapInterval()` / `strategy.maxTickDeviation()`.
+4. Fees, read on-chain: `strategy.factory()` → `factory.getFees()` returns
+   `(total, call)`, both 18-decimals fractions of harvested yield — launch values
+   `0.1e18` (10%) total with `0.05e18` caller slice carved out of it, never added on top.
+   No fixed deposit or withdrawal fee exists. The fee applies to harvested yield only,
+   never principal; harvested net profit unlocks into `balances()` linearly over 1 hour
+   (`lockedProfit`).
 
 **USE — deposit** (calm-gated):
 ```
@@ -62,25 +78,47 @@ party, human or agent.
 token0.approve(vault, take0); token1.approve(vault, take1)
 vault.deposit(take0, take1, minShares)        // minShares: e.g. 99% of previewed shares
 ```
+- **Preview first, then decide what to bring**: depending on the vault's current mix,
+  `previewDeposit` may take **zero of one leg** (and zero shares for a deposit it cannot
+  use). The preview is also not a binding quote — pool state moves between preview and
+  execution; the `minShares` buffer is what absorbs that drift.
 - `take*` may be below your inputs (one-sided or off-ratio input: the vault takes only what
-  the current position mix can absorb). `fee*` > 0 flags the balancing fee on an
-  imbalanced fill — expected, not an error.
-- Reverts `NotCalm` while spot is off the pool's 2-min TWAP beyond the deviation bound.
-  Re-read `isCalm()` and retry; the gate exists to block price-manipulation entries.
+  the current position mix can absorb). `fee*` > 0 is the balancing fee — it depends on the
+  **vault's own imbalance and how much your deposit fills the short side**, not simply on
+  whether your inputs look symmetric: a both-sided deposit can still incur it, a first
+  deposit into an empty vault never does. Expected, not an error. A badly one-sided input
+  can end with zero shares (`NoShares` revert) — re-preview rather than force it.
+- `minShares` is **your** tolerance choice, not a contract guarantee; 99% of the previewed
+  value is a sane default. Compute it in raw integer units (tiny amounts can floor to 0).
+- Reverts `NotCalm` while spot is beyond the deviation bound from the pool TWAP. Do not
+  blind-resend: wait, re-read `isCalm()`, **re-run previewDeposit and re-simulate with the
+  exact parameters you will send**, then broadcast. Never loosen `minShares` in response
+  to a failure. The gate exists to block price-manipulation entries.
 
 **USE — withdraw** (never calm-gated):
 ```
 (out0, out1) = vault.previewWithdraw(shares)
 vault.withdraw(shares, minOut0, minOut1)      // e.g. 99% of previewed outs
 ```
-- One edge: a withdraw in the **same second** as any deposit into the strategy re-checks
-  calm (strategy-level `lastDeposit`, not per-account). Wait one block and it clears.
-- You always receive both tokens at the current in-vault mix — full-range exit, no swap.
+- `minOut0`/`minOut1` bound each token independently (raw integer units), not total value;
+  99% of each previewed amount is a sane default. Never loosen them after a failure.
+- Edges to know: a withdraw sharing a **second** with any deposit into the strategy
+  re-checks calm (strategy-level `lastDeposit`, not per-account — a stream of deposits can
+  keep re-triggering it); and the exit path still *reads* `isCalm()` (a false result only
+  skips re-adding liquidity, but if the pool's `observe()` itself reverts, the read
+  reverts). In practice exits clear promptly; "never calm-gated" means volatility alone
+  cannot lock you in, not that no revert path exists.
+- You receive both tokens at the current in-vault mix — no swap; at a range edge one of
+  the two amounts can legitimately be zero.
 
 **USE — harvest** (optional, public, calm-gated): anyone may call `strategy.harvest()`
-(or `harvest(recipient)`); the caller's slice of the performance fee pays for gas. Yield
-accrues to holders as share price: `totalSupply` is unchanged by harvest while `balances()`
-grow — there is no reward token and nothing to claim.
+(caller reward goes to **`tx.origin`** — relevant if you execute through a smart account)
+or `harvest(recipient)`. The reward is the caller slice of the performance fee, paid
+in-kind in token0/token1 — it is **not** guaranteed to exist or to cover your gas;
+estimate pending fees before calling. Yield accrues to holders as share value:
+`totalSupply` is unchanged by harvest, and the net profit **unlocks into `balances()`
+linearly over 1 hour** — an exit immediately after harvest does not capture the still-
+locked remainder. There is no reward token and nothing to claim.
 
 ## Risk facts (state them, do not soften them)
 - **Drift:** the token mix follows the market; no loss is forced, but you exit at the
@@ -92,6 +130,27 @@ grow — there is no reward token and nothing to claim.
   while the pool trades on; expect wider drift and re-center after gaps.
 - Contracts are pre-audit at first launch (scaled soft launch, same posture as the farm
   tier). Size accordingly.
+
+## Minimal ABI (the exact fragments this guide uses)
+```json
+[
+ {"type":"function","name":"strategy","stateMutability":"view","inputs":[],"outputs":[{"type":"address"}]},
+ {"type":"function","name":"wants","stateMutability":"view","inputs":[],"outputs":[{"type":"address"},{"type":"address"}]},
+ {"type":"function","name":"balances","stateMutability":"view","inputs":[],"outputs":[{"type":"uint256"},{"type":"uint256"}]},
+ {"type":"function","name":"totalSupply","stateMutability":"view","inputs":[],"outputs":[{"type":"uint256"}]},
+ {"type":"function","name":"balanceOf","stateMutability":"view","inputs":[{"type":"address"}],"outputs":[{"type":"uint256"}]},
+ {"type":"function","name":"isCalm","stateMutability":"view","inputs":[],"outputs":[{"type":"bool"}]},
+ {"type":"function","name":"previewDeposit","stateMutability":"view","inputs":[{"type":"uint256"},{"type":"uint256"}],"outputs":[{"type":"uint256"},{"type":"uint256"},{"type":"uint256"},{"type":"uint256"},{"type":"uint256"}]},
+ {"type":"function","name":"deposit","stateMutability":"nonpayable","inputs":[{"type":"uint256"},{"type":"uint256"},{"type":"uint256"}],"outputs":[]},
+ {"type":"function","name":"previewWithdraw","stateMutability":"view","inputs":[{"type":"uint256"}],"outputs":[{"type":"uint256"},{"type":"uint256"}]},
+ {"type":"function","name":"withdraw","stateMutability":"nonpayable","inputs":[{"type":"uint256"},{"type":"uint256"},{"type":"uint256"}],"outputs":[]}
+]
+```
+Strategy: `vault()->(address)`, `pool()->(address)`, `factory()->(address)`,
+`price()->(uint256)`, `range()->(uint256,uint256)`, `positionMain()->(int24,int24)`,
+`lastPositionAdjustment()->(uint256)`, `paused()->(bool)`, `twapInterval()->(uint32)`,
+`maxTickDeviation()->(int56)`, `harvest()`, `harvest(address)`. Factory:
+`getFees()->(uint256,uint256)`.
 
 ## Cross-references
 - Contract source: open-sourced at launch; lifecycle drill record
